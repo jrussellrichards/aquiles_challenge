@@ -1,10 +1,329 @@
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Shield, Brain, CheckCircle, XCircle, List, AlertTriangle } from 'lucide-react'
-import { useState } from 'react'
+import { ArrowLeft, Shield, Brain, CheckCircle, XCircle, List, AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import './Informe.css'
 
 const Informe = () => {
   const [showIndex, setShowIndex] = useState(false)
+  const [currentTechnicalSlide, setCurrentTechnicalSlide] = useState(0)
+  const [currentProcessSlide, setCurrentProcessSlide] = useState(0)
+  const [currentBenefitSlide, setCurrentBenefitSlide] = useState(0)
+
+  // Datos de soluciones técnicas
+  const technicalSolutions = [
+    {
+      title: "1. Nueva Sociedad",
+      kpi: "95% precisión • 30s promedio",
+      challenge: "Validar 4 documentos específicos + RUT",
+      solution: "OCR + Clasificación ML + Validación reglas",
+      steps: [
+        "📄 Detección automática de tipos documento",
+        "🔍 Extracción datos estructurados",
+        "✅ Validación contra reglas negocio",
+        "📊 Score de confianza por documento"
+      ]
+    },
+    {
+      title: "2. Nuevo Poder",
+      kpi: "94% precisión • 25s promedio",
+      challenge: "Interpretar escritura pública modificada",
+      solution: "NLP + Template matching + Validación SIAF",
+      steps: [
+        "📝 Análisis semántico de modificaciones",
+        "🔍 Identificación tipo y alcance poder",
+        "✅ Validación RUT y existencia sociedad",
+        "🎯 Match vs criterios estándar BCI"
+      ]
+    },
+    {
+      title: "3. Poder Banca Persona",
+      kpi: "96% precisión • 20s promedio",
+      challenge: "Distinguir escritura vs instrumento privado",
+      solution: "Clasificación multimodal + OCR avanzado",
+      steps: [
+        "🏛️ Identificación tipo documento legal",
+        "✍️ Verificación firma y legalización",
+        "🔐 Validación datos bancarios",
+        "📈 Score de autenticidad"
+      ]
+    },
+    {
+      title: "4. Reparo",
+      kpi: "93% precisión • 35s promedio",
+      challenge: "Comprender reparo y validar consistencia",
+      solution: "NLU + Document comparison + Logic validation",
+      steps: [
+        "🧠 Comprensión intención reparo",
+        "📑 Comparación documentos vs reparo",
+        "⚖️ Validación consistencia lógica",
+        "💬 Generación mensaje explicación"
+      ]
+    },
+    {
+      title: "5. Revisión",
+      kpi: "92% precisión • 40s promedio",
+      challenge: "Clasificar tipo de revisión y priorizar",
+      solution: "Intent classification + Urgency scoring",
+      steps: [
+        "🎯 Clasificación automática tipo revisión",
+        "⚡ Scoring de urgencia",
+        "👥 Asignación inteligente abogado",
+        "📋 Preparación contexto abogado"
+      ]
+    },
+    {
+      title: "6. Borrador",
+      kpi: "91% precisión • 45s promedio",
+      challenge: "Procesar documento Word y workflow especial",
+      solution: "Document parsing + Template recognition",
+      steps: [
+        "📄 Extracción contenido Word",
+        "🔍 Identificación tipo borrador",
+        "📋 Workflow confirmación cliente",
+        "✅ Validación formato y contenido"
+      ]
+    },
+    {
+      title: "7. Certificado Apoderado",
+      kpi: "97% precisión • 15s promedio",
+      challenge: "Emisión certificado simple pero frecuente",
+      solution: "Template generation + DB lookup",
+      steps: [
+        "🔍 Consulta automática base datos",
+        "📋 Generación certificado estándar",
+        "✅ Validación vigencia poderes",
+        "📧 Envío automático resultado"
+      ]
+    },
+    {
+      title: "8. Modificación Social",
+      kpi: "93% precisión • 30s promedio",
+      challenge: "Diversos tipos de cambios societarios",
+      solution: "Multi-class classification + Change detection",
+      steps: [
+        "🎯 Clasificación tipo modificación",
+        "📄 Extracción datos relevantes",
+        "⚖️ Validación cumplimiento normativo",
+        "📊 Generación resumen cambios"
+      ]
+    },
+    {
+      title: "9. Otros",
+      kpi: "88% precisión • 50s promedio",
+      challenge: "Casos no estándar y excepciones",
+      solution: "Escalation + Human-in-the-loop",
+      steps: [
+        "🎯 Detección caso no estándar",
+        "📋 Clasificación nivel complejidad",
+        "👤 Asignación experto apropiado",
+        "📝 Documentación caso para aprendizaje"
+      ]
+    }
+  ]
+
+  // Datos de procesos manuales
+  const processTypes = [
+    {
+      number: "1",
+      title: "Nueva Sociedad",
+      manualProcess: [
+        "Verificación de RUT en SIAF y Portal Everest",
+        "Revisión documental de 4 documentos obligatorios",
+        "Validación de completitud"
+      ],
+      aiSolution: [
+        "Validación automática de RUT con dígito verificador",
+        "Detección de documentos: Escritura Constitución, Inscripción Extracto, Extractos, Publicación Diario Oficial",
+        "Matching inteligente entre adjuntos y requerimientos",
+        "Decisión automática: Aprobar o solicitar faltantes"
+      ]
+    },
+    {
+      number: "2",
+      title: "Nuevo Poder",
+      manualProcess: [
+        "Revisión de RUT en SIAF",
+        "Verificación de escritura de modificación"
+      ],
+      aiSolution: [
+        "Clasificación automática del tipo de poder",
+        "Extracción IDP de datos de escritura",
+        "Validación de completitud documental"
+      ]
+    },
+    {
+      number: "3",
+      title: "Poder Banca Persona",
+      manualProcess: [
+        "Revisión de RUT en SIAF",
+        "Verificación de escritura pública o instrumento privado notariado"
+      ],
+      aiSolution: [
+        "Clasificación automática documento legal",
+        "Validación de firmas y legalizaciones",
+        "Extracción de poderes bancarios específicos"
+      ]
+    },
+    {
+      number: "4",
+      title: "Reparo",
+      manualProcess: [
+        "Lectura del correo con observación",
+        "Identificación del problema específico",
+        "Validación de documentos corregidos"
+      ],
+      aiSolution: [
+        "Comprensión inteligente del reparo (NLU)",
+        "Comparación automática documento original vs corregido",
+        "Validación de que el reparo fue subsanado",
+        "Generación de respuesta al cliente"
+      ]
+    },
+    {
+      number: "5",
+      title: "Revisión",
+      manualProcess: [
+        "Clasificación del tipo de revisión solicitada",
+        "Priorización según urgencia",
+        "Asignación manual a abogado disponible"
+      ],
+      aiSolution: [
+        "Clasificación automática del tipo de revisión",
+        "Scoring de urgencia basado en contenido",
+        "Asignación inteligente según especialidad y carga",
+        "Preparación de contexto para el abogado"
+      ]
+    },
+    {
+      number: "6",
+      title: "Borrador",
+      manualProcess: [
+        "Descarga y lectura de documento Word",
+        "Identificación de tipo de documento",
+        "Workflow especial de confirmación con cliente"
+      ],
+      aiSolution: [
+        "Extracción automática de contenido Word",
+        "Identificación de tipo de borrador",
+        "Automatización de workflow de confirmación",
+        "Validación de formato y requisitos"
+      ]
+    },
+    {
+      number: "7",
+      title: "Certificado Apoderado",
+      manualProcess: [
+        "Consulta manual en base de datos",
+        "Generación manual de certificado",
+        "Envío de respuesta"
+      ],
+      aiSolution: [
+        "Consulta automática BBDD apoderados",
+        "Generación instantánea de certificado estándar",
+        "Validación de vigencia de poderes",
+        "Envío automático de resultado"
+      ]
+    },
+    {
+      number: "8",
+      title: "Modificación Social",
+      manualProcess: [
+        "Identificación del tipo de modificación",
+        "Validación de documentación requerida",
+        "Revisión de cumplimiento normativo"
+      ],
+      aiSolution: [
+        "Clasificación automática del tipo de modificación",
+        "Extracción de datos relevantes",
+        "Validación automática de cumplimiento",
+        "Generación de resumen de cambios"
+      ]
+    },
+    {
+      number: "9",
+      title: "Otros (Casos Especiales)",
+      manualProcess: [
+        "Análisis caso por caso",
+        "Escalamiento a supervisor",
+        "Documentación manual del caso"
+      ],
+      aiSolution: [
+        "Detección de caso no estándar",
+        "Clasificación de nivel de complejidad",
+        "Asignación automática a experto apropiado",
+        "Documentación estructurada para aprendizaje"
+      ]
+    }
+  ]
+
+  // Datos de beneficios
+  const benefits = [
+    {
+      icon: "🚀",
+      title: "Eficiencia Operativa",
+      metrics: [
+        { value: "2d → 1d → h", desc: "Meta inicial: 1 día | Meta 6 meses: horas" },
+        { value: "50% → 100%", desc: "Adopción: 50% inicial, 100% a 6 meses" },
+        { value: "24/7", desc: "Disponibilidad continua sin horarios" }
+      ]
+    },
+    {
+      icon: "🎯",
+      title: "Calidad y Precisión",
+      metrics: [
+        { value: "95%+", desc: "Precisión en clasificación automática" },
+        { value: "0", desc: "Errores por fatiga o distracción" },
+        { value: "100%", desc: "Trazabilidad de todas las decisiones" }
+      ]
+    },
+    {
+      icon: "👥",
+      title: "Impacto Humano",
+      metrics: [
+        { value: "75%", desc: "Tiempo liberado del asistente" },
+        { value: "100%", desc: "Enfoque del abogado en juicio legal" },
+        { value: "+50%", desc: "Satisfacción laboral por valor agregado" }
+      ]
+    },
+    {
+      icon: "💰",
+      title: "Beneficios Económicos",
+      metrics: [
+        { value: "97%", desc: "Reducción de costos operativos" },
+        { value: "< 1 mes", desc: "Tiempo de retorno de inversión" },
+        { value: "$27.9M", desc: "Ahorro anual proyectado" }
+      ]
+    },
+    {
+      icon: "🏢",
+      title: "Ventajas Estratégicas",
+      metrics: [
+        { value: "+90%", desc: "Satisfacción del cliente ejecutivo" },
+        { value: "Competitivo", desc: "Ventaja competitiva en el mercado" },
+        { value: "Escalable", desc: "Base para expansión a otras áreas" }
+      ]
+    },
+    {
+      icon: "🔒",
+      title: "Seguridad y Cumplimiento",
+      metrics: [
+        { value: "100%", desc: "Datos procesados en infraestructura BCI" },
+        { value: "Audit", desc: "Registro completo de todas las acciones" },
+        { value: "GDPR", desc: "Cumplimiento normativo de protección de datos" }
+      ]
+    }
+  ]
+
+  // Auto-avance de sliders cada 5 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTechnicalSlide(prev => (prev + 1) % technicalSolutions.length)
+      setCurrentProcessSlide(prev => (prev + 1) % processTypes.length)
+      setCurrentBenefitSlide(prev => (prev + 1) % benefits.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [technicalSolutions.length, processTypes.length, benefits.length])
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -45,12 +364,13 @@ const Informe = () => {
             <h3>Índice de Contenidos</h3>
             <nav className="index-nav">
               <button onClick={() => scrollToSection('problema-actual')}>1. El Problema Actual</button>
-              <button onClick={() => scrollToSection('justificacion-ia')}>2. Justificación de la Solución IA</button>
-              <button onClick={() => scrollToSection('flujo-completo')}>3. AS IS vs TODO (Solución Completa)</button>
-              <button onClick={() => scrollToSection('beneficios-completos')}>4. Beneficios de la Solución Completa</button>
-              <button onClick={() => scrollToSection('solucion-tecnica')}>5. Solución Técnica por Punto</button>
-              <button onClick={() => scrollToSection('transformacion-roles')}>6. Transformación de Roles</button>
-              <button onClick={() => scrollToSection('roadmap')}>7. Roadmap al MVP</button>
+              <button onClick={() => scrollToSection('justificacion-ia')}>2. Por Qué IA es la Solución</button>
+              <button onClick={() => scrollToSection('flujo-completo')}>3. Comparativa AS IS vs TO BE</button>
+              <button onClick={() => scrollToSection('beneficios-completos')}>4. Beneficios de la Transformación</button>
+              <button onClick={() => scrollToSection('roadmap')}>5. Roadmap de Implementación</button>
+              <button onClick={() => scrollToSection('mvp-costos')}>6. MVP: Inversión y Retorno</button>
+              <button onClick={() => scrollToSection('solucion-tecnica')}>7. Detalle Técnico por Caso</button>
+              <button onClick={() => scrollToSection('transformacion-roles')}>8. Transformación de Roles</button>
             </nav>
           </div>
         </div>
@@ -318,208 +638,64 @@ const Informe = () => {
 
         {/* 4. Beneficios de la Solución Completa */}
         <section id="beneficios-completos" className="informe-section">
-          <h2 className="section-title" data-number="4">Beneficios de la Solución Completa</h2>
+          <h2 className="section-title" data-number="4">Beneficios de la Transformación</h2>
           <p className="section-subtitle">Impacto cuantitativo y cualitativo de la transformación total</p>
 
-          <div className="benefits-complete-grid">
-            <div className="benefit-category">
-              <h3>🚀 Eficiencia Operativa</h3>
-              <div className="benefit-metrics">
-                <div className="metric-item">
-                  <div className="metric-value">2d → 1d → h</div>
-                  <div className="metric-desc">Meta inicial: 1 día | Meta 6 meses: horas</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">50% → 100%</div>
-                  <div className="metric-desc">Adopción: 50% inicial, 100% a 6 meses</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">24/7</div>
-                  <div className="metric-desc">Disponibilidad continua sin horarios</div>
-                </div>
-              </div>
+          <div className="slider-container">
+            <div className="slider-navigation">
+              {benefits.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentBenefitSlide ? 'active' : ''}`}
+                  onClick={() => setCurrentBenefitSlide(index)}
+                  aria-label={`Ir a beneficio ${index + 1}`}
+                />
+              ))}
             </div>
 
-            <div className="benefit-category">
-              <h3>🎯 Calidad y Precisión</h3>
-              <div className="benefit-metrics">
-                <div className="metric-item">
-                  <div className="metric-value">95%+</div>
-                  <div className="metric-desc">Precisión en clasificación automática</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">0</div>
-                  <div className="metric-desc">Errores por fatiga o distracción</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">100%</div>
-                  <div className="metric-desc">Trazabilidad de todas las decisiones</div>
+            <div className="slider-content">
+              <button
+                className="slider-arrow left"
+                onClick={() => setCurrentBenefitSlide(prev => 
+                  prev === 0 ? benefits.length - 1 : prev - 1
+                )}
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={32} />
+              </button>
+
+              <div className="benefit-category active">
+                <h3>{benefits[currentBenefitSlide].icon} {benefits[currentBenefitSlide].title}</h3>
+                <div className="benefit-metrics">
+                  {benefits[currentBenefitSlide].metrics.map((metric, idx) => (
+                    <div key={idx} className="metric-item">
+                      <div className="metric-value">{metric.value}</div>
+                      <div className="metric-desc">{metric.desc}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
+
+              <button
+                className="slider-arrow right"
+                onClick={() => setCurrentBenefitSlide(prev => 
+                  (prev + 1) % benefits.length
+                )}
+                aria-label="Siguiente"
+              >
+                <ChevronRight size={32} />
+              </button>
             </div>
 
-            <div className="benefit-category">
-              <h3>👥 Impacto Humano</h3>
-              <div className="benefit-metrics">
-                <div className="metric-item">
-                  <div className="metric-value">75%</div>
-                  <div className="metric-desc">Tiempo liberado del asistente</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">100%</div>
-                  <div className="metric-desc">Enfoque del abogado en juicio legal</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">+50%</div>
-                  <div className="metric-desc">Satisfacción laboral por valor agregado</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="benefit-category">
-              <h3>💰 Beneficios Económicos</h3>
-              <div className="benefit-metrics">
-                <div className="metric-item">
-                  <div className="metric-value">97%</div>
-                  <div className="metric-desc">Reducción de costos operativos ($27.9M/año)</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">$485K</div>
-                  <div className="metric-desc">Costo total anual del MVP</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">$2.3M</div>
-                  <div className="metric-desc">Ahorro mensual inmediato</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="benefit-category">
-              <h3>🏢 Ventajas Estratégicas</h3>
-              <div className="benefit-metrics">
-                <div className="metric-item">
-                  <div className="metric-value">+90%</div>
-                  <div className="metric-desc">Satisfacción del cliente ejecutivo</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">Competitivo</div>
-                  <div className="metric-desc">Ventaja competitiva en el mercado</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">Escalable</div>
-                  <div className="metric-desc">Base para expansión a otras áreas</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="benefit-category">
-              <h3>🔒 Seguridad y Cumplimiento</h3>
-              <div className="benefit-metrics">
-                <div className="metric-item">
-                  <div className="metric-value">100%</div>
-                  <div className="metric-desc">Datos procesados en infraestructura BCI</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">Audit</div>
-                  <div className="metric-desc">Registro completo de todas las acciones</div>
-                </div>
-                <div className="metric-item">
-                  <div className="metric-value">GDPR</div>
-                  <div className="metric-desc">Cumplimiento normativo de protección de datos</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="roi-projection">
-            <h3>Proyección de ROI</h3>
-            <div className="roi-chart">
-              <div className="roi-timeline">
-                <div className="roi-point">
-                  <div className="roi-month">Inversión</div>
-                  <div className="roi-value">$485K</div>
-                  <div className="roi-desc">Costo anual MVP</div>
-                </div>
-                <div className="roi-point">
-                  <div className="roi-month">Mes 1</div>
-                  <div className="roi-value">$2.3M</div>
-                  <div className="roi-desc">Ahorro mensual</div>
-                </div>
-                <div className="roi-point highlight">
-                  <div className="roi-month">Año 1</div>
-                  <div className="roi-value">$27.9M</div>
-                  <div className="roi-desc">Ahorro anual total</div>
-                </div>
-                <div className="roi-point">
-                  <div className="roi-month">ROI</div>
-                  <div className="roi-value">5,650%</div>
-                  <div className="roi-desc">Retorno primer año</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Desglose de Costos */}
-          <div className="cost-breakdown">
-            <h3>Desglose de Costos del MVP</h3>
-            <div className="cost-grid">
-              <div className="cost-card">
-                <div className="cost-icon">🤖</div>
-                <h4>Agente IA</h4>
-                <div className="cost-amount">$36/mes</div>
-                <div className="cost-detail">$432/año</div>
-                <p>Procesamiento inteligente de solicitudes con Gemini API</p>
-              </div>
-              
-              <div className="cost-card">
-                <div className="cost-icon">🏗️</div>
-                <h4>Arquitectura Cloud</h4>
-                <div className="cost-amount">$6.8/mes</div>
-                <div className="cost-detail">$82/año</div>
-                <p>Infraestructura serverless escalable</p>
-              </div>
-              
-              <div className="cost-card highlight">
-                <div className="cost-icon">💰</div>
-                <h4>Costo Total Anual</h4>
-                <div className="cost-amount">$485,352</div>
-                <div className="cost-detail">$42.8/mes promedio</div>
-                <p>Basado en 6,000 requests/mes con 1,000 tokens entrada y 500 tokens salida</p>
-              </div>
-            </div>
-            
-            <div className="savings-comparison">
-              <div className="comparison-item current">
-                <h4>💼 Situación Actual (HOY)</h4>
-                <div className="comparison-amount">$28.8M/año</div>
-                <div className="comparison-detail">$2.4M/mes</div>
-                <p>2 asistentes dedicados a validaciones</p>
-              </div>
-              
-              <div className="comparison-arrow">→</div>
-              
-              <div className="comparison-item future">
-                <h4>🚀 Con Aquiles (TO BE)</h4>
-                <div className="comparison-amount">$900K/año</div>
-                <div className="comparison-detail">$75K/mes</div>
-                <p>1 asistente para supervisión estratégica + sistema MVP</p>
-              </div>
-              
-              <div className="comparison-arrow">=</div>
-              
-              <div className="comparison-item savings">
-                <h4>✨ Ahorro Total</h4>
-                <div className="comparison-amount">$27.9M/año</div>
-                <div className="comparison-detail">$2.325M/mes</div>
-                <p>Liberación de 315 HH mensuales para tareas de mayor valor</p>
-              </div>
+            <div className="slider-counter">
+              {currentBenefitSlide + 1} / {benefits.length}
             </div>
           </div>
         </section>
 
         {/* Detalle del Proceso Actual */}
         <section id="proceso-detalle" className="informe-section process-detail-section">
-          <h2 className="section-title">El Trabajo del Asistente Hoy</h2>
+          <h3 className="subsection-title">El Trabajo del Asistente Hoy</h3>
           <p className="section-subtitle">Los 9 tipos de solicitudes que el asistente clasifica manualmente cada día</p>
           
           <div className="process-intro">
@@ -531,237 +707,67 @@ const Informe = () => {
             </p>
           </div>
 
-          <div className="process-types-grid">
-            {/* Tipo 1 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">1</span>
-                <h4>Nueva Sociedad</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Verificación de RUT en SIAF y Portal Everest</li>
-                    <li>Revisión documental de 4 documentos obligatorios</li>
-                    <li>Validación de completitud</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Validación automática</strong> de RUT con dígito verificador</li>
-                    <li><strong>Detección de documentos:</strong> Escritura Constitución, Inscripción Extracto, Extractos, Publicación Diario Oficial</li>
-                    <li><strong>Matching inteligente</strong> entre adjuntos y requerimientos</li>
-                    <li><strong>Decisión automática:</strong> Aprobar o solicitar faltantes</li>
-                  </ul>
-                </div>
-              </div>
+          <div className="slider-container">
+            <div className="slider-navigation">
+              {processTypes.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentProcessSlide ? 'active' : ''}`}
+                  onClick={() => setCurrentProcessSlide(index)}
+                  aria-label={`Ir a proceso ${index + 1}`}
+                />
+              ))}
             </div>
 
-            {/* Tipo 2 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">2</span>
-                <h4>Nuevo Poder</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Verificación de escritura de modificación</li>
-                  </ul>
+            <div className="slider-content">
+              <button
+                className="slider-arrow left"
+                onClick={() => setCurrentProcessSlide(prev => 
+                  prev === 0 ? processTypes.length - 1 : prev - 1
+                )}
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={32} />
+              </button>
+
+              <div className="process-type-card active">
+                <div className="process-type-header">
+                  <span className="process-number">{processTypes[currentProcessSlide].number}</span>
+                  <h4>{processTypes[currentProcessSlide].title}</h4>
                 </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Clasificación automática</strong> del tipo de poder</li>
-                    <li><strong>Extracción IDP</strong> de datos de escritura</li>
-                    <li><strong>Validación de completitud</strong> documental</li>
-                  </ul>
+                <div className="process-type-content">
+                  <div className="current-process">
+                    <h5>Proceso Manual Actual:</h5>
+                    <ul>
+                      {processTypes[currentProcessSlide].manualProcess.map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="ai-solution">
+                    <h5>Solución con Aquiles:</h5>
+                    <ul>
+                      {processTypes[currentProcessSlide].aiSolution.map((item, idx) => (
+                        <li key={idx}><strong>{item.split(':')[0]}:</strong> {item.split(':')[1] || item}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
+
+              <button
+                className="slider-arrow right"
+                onClick={() => setCurrentProcessSlide(prev => 
+                  (prev + 1) % processTypes.length
+                )}
+                aria-label="Siguiente"
+              >
+                <ChevronRight size={32} />
+              </button>
             </div>
 
-            {/* Tipo 3 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">3</span>
-                <h4>Poder Banca Persona</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Verificación de escritura pública o instrumento privado notariado</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Detección automática</strong> de tipo de documento legal</li>
-                    <li><strong>Validación de formato</strong> y legalización</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Tipo 4 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">4</span>
-                <h4>Reparo</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Verificación del reparo emitido por abogado</li>
-                    <li>Validación de coincidencia documentación vs reparo</li>
-                    <li>Comunicación a ejecutivo si hay inconsistencias</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Comprensión semántica</strong> del reparo</li>
-                    <li><strong>Matching automático</strong> documentos vs solicitud</li>
-                    <li><strong>Generación de mensaje</strong> si hay inconsistencias</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Tipo 5 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">5</span>
-                <h4>Revisión</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Carga manual al abogado de consultas (ej: falta apoderado, error nombre)</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Clasificación automática</strong> del tipo de revisión</li>
-                    <li><strong>Priorización inteligente</strong> según urgencia</li>
-                    <li><strong>Asignación directa</strong> al abogado disponible</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Tipo 6 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">6</span>
-                <h4>Borrador</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Revisión de documento Word</li>
-                    <li>Cliente requiere confirmar antes de legalización</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Detección de tipo</strong> de documento borrador</li>
-                    <li><strong>Extracción de contenido</strong> para análisis</li>
-                    <li><strong>Workflow especial</strong> de confirmación cliente</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Tipo 7 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">7</span>
-                <h4>Certificado Apoderado</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Asignación manual a abogado</li>
-                    <li>Generación de listado de apoderados vigentes</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Clasificación automática</strong> de solicitud</li>
-                    <li><strong>Consulta a BBDD</strong> de apoderados</li>
-                    <li><strong>Pre-generación</strong> de certificado estándar</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Tipo 8 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">8</span>
-                <h4>Informe BCI MIAMI</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Revisión de solicitud específica</li>
-                    <li>Generación de informe dirigido a BCI Miami</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Detección automática</strong> de solicitud internacional</li>
-                    <li><strong>Template específico</strong> para BCI Miami</li>
-                    <li><strong>Generación de borrador</strong> con RAG</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Tipo 9 */}
-            <div className="process-type-card">
-              <div className="process-type-header">
-                <span className="process-number">9</span>
-                <h4>Poder de Tercero</h4>
-              </div>
-              <div className="process-type-content">
-                <div className="current-process">
-                  <h5>Proceso Manual Actual:</h5>
-                  <ul>
-                    <li>Revisión de RUT en SIAF</li>
-                    <li>Revisión del poder para depósito de especie valorada</li>
-                    <li>Validación de cuenta corriente tercero</li>
-                  </ul>
-                </div>
-                <div className="ai-solution">
-                  <h5>Solución con Aquiles:</h5>
-                  <ul>
-                    <li><strong>Extracción automática</strong> de datos de tercero</li>
-                    <li><strong>Validación de facultades</strong> específicas</li>
-                    <li><strong>Verificación de consistencia</strong> de información</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="slider-counter">
+              {currentProcessSlide + 1} / {processTypes.length}
             </div>
           </div>
 
@@ -848,244 +854,76 @@ const Informe = () => {
           </div>
         </section>
 
-        {/* 5. Solución Técnica por Punto */}
+        {/* 7. Solución Técnica por Punto */}
         <section id="solucion-tecnica" className="informe-section">
-          <h2 className="section-title" data-number="5">Solución Técnica por Cada Punto</h2>
+          <h2 className="section-title" data-number="7">Detalle Técnico por Caso</h2>
           <p className="section-subtitle">Cómo la IA aborda específicamente cada uno de los 9 tipos de gestión con KPIs medibles</p>
 
-          <div className="technical-solutions-grid">
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>1. Nueva Sociedad</h4>
-                <div className="solution-kpi">95% precisión • 30s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Validar 4 documentos específicos + RUT
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> OCR + Clasificación ML + Validación reglas
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>📄 Detección automática de tipos documento</li>
-                    <li>🔍 Extracción datos estructurados</li>
-                    <li>✅ Validación contra reglas negocio</li>
-                    <li>📊 Score de confianza por documento</li>
-                  </ul>
-                </div>
-              </div>
+          <div className="slider-container">
+            <div className="slider-navigation">
+              {technicalSolutions.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentTechnicalSlide ? 'active' : ''}`}
+                  onClick={() => setCurrentTechnicalSlide(index)}
+                  aria-label={`Ir a solución ${index + 1}`}
+                />
+              ))}
             </div>
 
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>2. Nuevo Poder</h4>
-                <div className="solution-kpi">94% precisión • 25s promedio</div>
+            <div className="slider-content">
+              <button
+                className="slider-arrow left"
+                onClick={() => setCurrentTechnicalSlide(prev => 
+                  prev === 0 ? technicalSolutions.length - 1 : prev - 1
+                )}
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={32} />
+              </button>
+
+              <div className="technical-solution-card active">
+                <div className="solution-header">
+                  <h4>{technicalSolutions[currentTechnicalSlide].title}</h4>
+                  <div className="solution-kpi">{technicalSolutions[currentTechnicalSlide].kpi}</div>
+                </div>
+                <div className="solution-details">
+                  <div className="current-challenge">
+                    <strong>Desafío:</strong> {technicalSolutions[currentTechnicalSlide].challenge}
+                  </div>
+                  <div className="ai-approach">
+                    <strong>Solución IA:</strong> {technicalSolutions[currentTechnicalSlide].solution}
+                  </div>
+                  <div className="implementation-steps">
+                    <ul>
+                      {technicalSolutions[currentTechnicalSlide].steps.map((step, idx) => (
+                        <li key={idx}>{step}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Interpretar escritura pública modificada
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> NLP + Template matching + Validación SIAF
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>📝 Análisis semántico de modificaciones</li>
-                    <li>🔗 Vinculación con poder original</li>
-                    <li>⚖️ Validación facultades legales</li>
-                    <li>📋 Generación checklist automático</li>
-                  </ul>
-                </div>
-              </div>
+
+              <button
+                className="slider-arrow right"
+                onClick={() => setCurrentTechnicalSlide(prev => 
+                  (prev + 1) % technicalSolutions.length
+                )}
+                aria-label="Siguiente"
+              >
+                <ChevronRight size={32} />
+              </button>
             </div>
 
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>3. Poder Banca Persona</h4>
-                <div className="solution-kpi">96% precisión • 20s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Distinguir escritura vs instrumento privado
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> Clasificación multimodal + OCR avanzado
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>🏛️ Identificación tipo documento legal</li>
-                    <li>✍️ Verificación firma y legalización</li>
-                    <li>🔐 Validación datos bancarios</li>
-                    <li>📈 Score de autenticidad</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>4. Reparo</h4>
-                <div className="solution-kpi">93% precisión • 35s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Comprender reparo y validar consistencia
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> NLU + Document comparison + Logic validation
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>🧠 Comprensión intención reparo</li>
-                    <li>📑 Comparación documentos vs reparo</li>
-                    <li>⚖️ Validación consistencia lógica</li>
-                    <li>💬 Generación mensaje explicación</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>5. Revisión</h4>
-                <div className="solution-kpi">92% precisión • 40s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Clasificar tipo de revisión y priorizar
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> Intent classification + Urgency scoring
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>🎯 Clasificación automática tipo revisión</li>
-                    <li>⚡ Scoring de urgencia</li>
-                    <li>👥 Asignación inteligente abogado</li>
-                    <li>📋 Preparación contexto abogado</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>6. Borrador</h4>
-                <div className="solution-kpi">91% precisión • 45s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Procesar documento Word y workflow especial
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> Document parsing + Template recognition
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>📄 Extracción contenido Word</li>
-                    <li>🔍 Identificación tipo borrador</li>
-                    <li>📋 Workflow confirmación cliente</li>
-                    <li>✅ Validación formato y contenido</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>7. Certificado Apoderado</h4>
-                <div className="solution-kpi">97% precisión • 15s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Consulta y generación de listado apoderados
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> Database query + Template generation
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>🔍 Consulta BBDD apoderados</li>
-                    <li>📊 Generación listado vigente</li>
-                    <li>📄 Formato certificado estándar</li>
-                    <li>⚖️ Validación vigencia poderes</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>8. Informe BCI MIAMI</h4>
-                <div className="solution-kpi">94% precisión • 50s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Generación de informe específico para filial
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> RAG + Template specialization
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>🌎 Detección solicitud internacional</li>
-                    <li>📋 Template específico BCI Miami</li>
-                    <li>🤖 Generación con RAG local</li>
-                    <li>🇺🇸 Adaptación requerimientos US</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="technical-solution-card">
-              <div className="solution-header">
-                <h4>9. Poder de Tercero</h4>
-                <div className="solution-kpi">95% precisión • 28s promedio</div>
-              </div>
-              <div className="solution-details">
-                <div className="current-challenge">
-                  <strong>Desafío:</strong> Validar depósito de especie y cuenta tercero
-                </div>
-                <div className="ai-approach">
-                  <strong>Solución IA:</strong> Entity extraction + Financial validation
-                </div>
-                <div className="implementation-steps">
-                  <ul>
-                    <li>👤 Extracción datos tercero</li>
-                    <li>💰 Validación facultades bancarias</li>
-                    <li>🏦 Verificación cuenta corriente</li>
-                    <li>📊 Score de riesgo transacción</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="technical-summary">
-            <h3>Métricas Globales de Rendimiento</h3>
-            <div className="metrics-summary">
-              <div className="metric-summary-item">
-                <div className="metric-summary-value">94.2%</div>
-                <div className="metric-summary-label">Precisión Promedio</div>
-              </div>
-              <div className="metric-summary-item">
-                <div className="metric-summary-value">32s</div>
-                <div className="metric-summary-label">Tiempo Promedio Procesamiento</div>
-              </div>
-              <div className="metric-summary-item">
-                <div className="metric-summary-value">99.7%</div>
-                <div className="metric-summary-label">Disponibilidad Sistema</div>
-              </div>
-              <div className="metric-summary-item">
-                <div className="metric-summary-value">&lt;0.1%</div>
-                <div className="metric-summary-label">Tasa de Falsos Positivos</div>
-              </div>
+            <div className="slider-counter">
+              {currentTechnicalSlide + 1} / {technicalSolutions.length}
             </div>
           </div>
         </section>
+        
+        {/* 8. Transformación de Roles */}
         <section id="transformacion-roles" className="informe-section">
-          <h2 className="section-title" data-number="6">Transformación de Roles</h2>
+          <h2 className="section-title" data-number="8">Transformación de Roles</h2>
           <p className="section-subtitle">De tareas operativas a supervisión estratégica</p>
           
           <div className="roles-grid">
@@ -1121,7 +959,7 @@ const Informe = () => {
 
         {/* Beneficios */}
         <section id="beneficios" className="informe-section">
-          <h2 className="section-title">Impacto en el Asistente</h2>
+          <h3 className="subsection-title">Impacto en el Asistente</h3>
           <p className="section-subtitle">Cómo Aquiles transforma el rol del asistente de bottleneck operativo a supervisor estratégico</p>
           
           <div className="benefits-grid">
@@ -1153,9 +991,9 @@ const Informe = () => {
           </div>
         </section>
 
-        {/* Roadmap */}
+        {/* 5. Roadmap */}
         <section id="roadmap" className="informe-section">
-          <h2 className="section-title" data-number="7">Roadmap al MVP</h2>
+          <h2 className="section-title" data-number="5">Roadmap de Implementación</h2>
           <p className="section-subtitle">Entrega ágil en 11 semanas</p>
           
           <div className="roadmap-timeline">
@@ -1194,9 +1032,117 @@ const Informe = () => {
           </div>
         </section>
 
+        {/* MVP: Inversión y Retorno */}
+        <section id="mvp-costos" className="informe-section">
+          <h2 className="section-title" data-number="6">MVP: Inversión y Retorno</h2>
+          <p className="section-subtitle">Caso de negocio con números reales</p>
+
+          {/* Desglose de Costos */}
+          <div className="cost-breakdown">
+            <h3>💰 Inversión Anual</h3>
+            <div className="cost-grid">
+              <div className="cost-card">
+                <div className="cost-icon">🤖</div>
+                <h4>Agente IA</h4>
+                <div className="cost-amount">$36/mes</div>
+                <div className="cost-detail">$432/año</div>
+                <p>Procesamiento inteligente de solicitudes con Gemini API</p>
+              </div>
+              
+              <div className="cost-card">
+                <div className="cost-icon">🏗️</div>
+                <h4>Arquitectura Cloud</h4>
+                <div className="cost-amount">$6.8/mes</div>
+                <div className="cost-detail">$82/año</div>
+                <p>Infraestructura serverless escalable</p>
+              </div>
+              
+              <div className="cost-card highlight">
+                <div className="cost-icon">💰</div>
+                <h4>Inversión Total</h4>
+                <div className="cost-amount">$485,352</div>
+                <div className="cost-detail">$42.8/mes promedio</div>
+                <p>Basado en 6,000 requests/mes con 1,000 tokens entrada y 500 tokens salida</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Comparación de Ahorro */}
+          <div className="savings-comparison">
+            <div className="comparison-item current">
+              <h4>💼 Situación Actual (HOY)</h4>
+              <div className="comparison-amount">$28.8M/año</div>
+              <div className="comparison-detail">$2.4M/mes</div>
+              <p>2 asistentes dedicados a validaciones</p>
+            </div>
+            
+            <div className="comparison-arrow">→</div>
+            
+            <div className="comparison-item future">
+              <h4>🚀 Con Aquiles (TO BE)</h4>
+              <div className="comparison-amount">$900K/año</div>
+              <div className="comparison-detail">$75K/mes</div>
+              <p>1 asistente para supervisión estratégica + sistema MVP</p>
+            </div>
+            
+            <div className="comparison-arrow">=</div>
+            
+            <div className="comparison-item savings">
+              <h4>✨ Ahorro Total</h4>
+              <div className="comparison-amount">$27.9M/año</div>
+              <div className="comparison-detail">$2.325M/mes</div>
+              <p>Liberación de 315 HH mensuales para tareas de mayor valor</p>
+            </div>
+          </div>
+
+          {/* Proyección de ROI */}
+          <div className="roi-projection">
+            <h3>📈 Proyección de Retorno</h3>
+            <div className="roi-chart">
+              <div className="roi-timeline">
+                <div className="roi-point">
+                  <div className="roi-month">Inversión</div>
+                  <div className="roi-value">$485K</div>
+                  <div className="roi-desc">Costo anual MVP</div>
+                </div>
+                <div className="roi-point">
+                  <div className="roi-month">Mes 1</div>
+                  <div className="roi-value">$2.3M</div>
+                  <div className="roi-desc">Ahorro mensual</div>
+                </div>
+                <div className="roi-point highlight">
+                  <div className="roi-month">Año 1</div>
+                  <div className="roi-value">$27.9M</div>
+                  <div className="roi-desc">Ahorro anual total</div>
+                </div>
+                <div className="roi-point">
+                  <div className="roi-month">ROI</div>
+                  <div className="roi-value">5,650%</div>
+                  <div className="roi-desc">Retorno primer año</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="roi-summary">
+              <div className="roi-highlight">
+                <span className="roi-label">Payback:</span>
+                <span className="roi-number">{'<'} 1 semana</span>
+              </div>
+              <div className="roi-highlight">
+                <span className="roi-label">Adopción KPI:</span>
+                <span className="roi-number">50% → 100% en 6 meses</span>
+              </div>
+              <div className="roi-highlight">
+                <span className="roi-label">SLA KPI:</span>
+                <span className="roi-number">2 días → horas</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Claves del Éxito */}
         <section id="claves-exito" className="informe-section">
-          <h2 className="section-title">Claves del Éxito</h2>
+          <h3 className="subsection-title">Claves del Éxito</h3>
           <p className="section-subtitle">Alianza basada en conocimiento, feedback y datos</p>
           
           <div className="pillars-grid">
@@ -1220,7 +1166,7 @@ const Informe = () => {
 
         {/* Visión de Futuro */}
         <section id="vision-futuro" className="informe-section">
-          <h2 className="section-title">Visión de Futuro: Aquiles</h2>
+          <h3 className="subsection-title">Visión de Futuro: Aquiles</h3>
           <p className="section-subtitle">Primera piedra de un ecosistema multi-agente legal</p>
           
           <div className="vision-grid">
@@ -1241,7 +1187,7 @@ const Informe = () => {
 
         {/* Implementación */}
         <section id="implementacion" className="informe-section last-section">
-          <h2 className="section-title">Consideraciones de Implementación</h2>
+          <h3 className="subsection-title">Consideraciones de Implementación</h3>
           <p className="section-subtitle">Alineación de tecnología, seguridad y reglas de negocio</p>
           
           <div className="implementation-grid">
