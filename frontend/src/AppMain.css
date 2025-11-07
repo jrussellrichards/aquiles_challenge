@@ -18,6 +18,7 @@ body {
 
 .app {
   min-height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 75%, #475569 100%);
   padding: var(--spacing-lg);
   font-family: var(--font-family-sans-serif);
@@ -26,6 +27,7 @@ body {
 
 .app-main {
   min-height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 75%, #475569 100%);
   padding: var(--spacing-lg);
   font-family: var(--font-family-sans-serif);
