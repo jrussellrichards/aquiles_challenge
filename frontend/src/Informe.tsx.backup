@@ -338,7 +338,6 @@ const Informe = () => {
                 <li>
                   <span className="step-num">5</span>
                   <span>Ejecutivo comunica solución al cliente</span>
-                  <div className="step-note">⚠️ Demoras por vacaciones, ausencias u olvido</div>
                 </li>
               </ol>
               <div className="diagnostic-alert">
@@ -394,7 +393,6 @@ const Informe = () => {
                       <li>Recibe OK</li>
                       <li>Notifica al cliente</li>
                       <li>Asiste comunicación final</li>
-                      <li>✅ Asistencia inmediata 24/7 (sin demoras)</li>
                     </ul>
                   </div>
                 </li>
@@ -820,6 +818,60 @@ const Informe = () => {
           </div>
             </div>
           </div>
+
+          <div className="ai-capabilities">
+            <h3>Tecnologías del MVP: Stack Técnico</h3>
+            <div className="capabilities-grid">
+              <div className="capability-card">
+                <div className="capability-icon">📧</div>
+                <h4>1. Recepción Inteligente (IDP)</h4>
+                <p>
+                  <strong>Intelligent Document Processing:</strong> Lee y comprende emails y adjuntos.
+                  Extrae información estructurada de documentos no estructurados (PDFs, Word, imágenes).
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">🎯</div>
+                <h4>2. Clasificación Multi-Clase</h4>
+                <p>
+                  <strong>LLM Classifier:</strong> Analiza el contenido y clasifica automáticamente entre 
+                  los 9 tipos de gestión con 95%+ de precisión.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">✅</div>
+                <h4>3. Validación Automática</h4>
+                <p>
+                  <strong>Rules Engine:</strong> Valida RUT (dígito verificador), consulta SIAF/Portal, 
+                  verifica completitud documental según reglas de cada tipo.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">�</div>
+                <h4>4. Asignación Inteligente</h4>
+                <p>
+                  <strong>Smart Routing:</strong> Asigna casos a abogados según especialidad, carga de trabajo
+                  y disponibilidad, optimizando distribución.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">�</div>
+                <h4>5. Gestión de Loops</h4>
+                <p>
+                  <strong>Error Handling:</strong> Detecta documentación faltante, solicita correcciones,
+                  maneja ausencias y reenvíos automáticamente.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">�</div>
+                <h4>6. Dashboard y Métricas</h4>
+                <p>
+                  <strong>Analytics:</strong> Trazabilidad completa, reportes de SLA, precisión por tipo,
+                  y detección de patrones para mejora continua.
+                </p>
+              </div>
+            </div>
+          </div>
           </div>
         </section>
 
@@ -942,54 +994,72 @@ const Informe = () => {
           </div>
 
           <div className="informe-section">
+            <div className="tech-intro">
+              <p className="intro-text">
+                Aquiles se construye sobre una arquitectura modular que combina lo mejor de la IA generativa 
+                con validación estructurada y loops de aprendizaje continuo.
+              </p>
+            </div>
+
             <div className="capabilities-grid">
               <div className="capability-card">
-                <div className="capability-icon">📧</div>
-                <h4>1. Recepción Inteligente (IDP)</h4>
-                <p>
-                  <strong>Intelligent Document Processing:</strong> Lee y comprende emails y adjuntos.
-                  Extrae información estructurada de documentos no estructurados (PDFs, Word, imágenes).
-                </p>
+                <div className="capability-icon">�</div>
+                <h4>IDP (Intelligent Document Processing)</h4>
+                <ul>
+                  <li>OCR avanzado para extracción de datos</li>
+                  <li>Detección automática de tipo de documento</li>
+                  <li>Validación de formato y estructura</li>
+                </ul>
               </div>
+
               <div className="capability-card">
                 <div className="capability-icon">🎯</div>
-                <h4>2. Clasificación Multi-Clase</h4>
-                <p>
-                  <strong>LLM Classifier:</strong> Analiza el contenido y clasifica automáticamente entre 
-                  los 9 tipos de gestión con 95%+ de precisión.
-                </p>
+                <h4>Clasificación Automática</h4>
+                <ul>
+                  <li>NLP para entender intención del correo</li>
+                  <li>Categorización en 9 tipos de gestión</li>
+                  <li>Score de confianza por clasificación</li>
+                </ul>
               </div>
+
               <div className="capability-card">
                 <div className="capability-icon">✅</div>
-                <h4>3. Validación Automática</h4>
-                <p>
-                  <strong>Rules Engine:</strong> Valida RUT (dígito verificador), consulta SIAF/Portal, 
-                  verifica completitud documental según reglas de cada tipo.
-                </p>
+                <h4>Validación Inteligente</h4>
+                <ul>
+                  <li>Reglas de negocio configurables</li>
+                  <li>Validación contra SIAF y bases internas</li>
+                  <li>Detección de inconsistencias lógicas</li>
+                </ul>
               </div>
+
               <div className="capability-card">
-                <div className="capability-icon">🎯</div>
-                <h4>4. Asignación Inteligente</h4>
-                <p>
-                  <strong>Smart Routing:</strong> Asigna casos a abogados según especialidad, carga de trabajo
-                  y disponibilidad, optimizando distribución.
-                </p>
+                <div className="capability-icon">�</div>
+                <h4>Asignación Inteligente</h4>
+                <ul>
+                  <li>Routing basado en complejidad</li>
+                  <li>Priorización automática por urgencia</li>
+                  <li>Balance de carga entre abogados</li>
+                </ul>
               </div>
+
               <div className="capability-card">
                 <div className="capability-icon">🔄</div>
-                <h4>5. Gestión de Loops</h4>
-                <p>
-                  <strong>Error Handling:</strong> Detecta documentación faltante, solicita correcciones,
-                  maneja ausencias y reenvíos automáticamente.
-                </p>
+                <h4>Loops de Mejora</h4>
+                <ul>
+                  <li>Feedback continuo de expertos</li>
+                  <li>Reentrenamiento automático</li>
+                  <li>A/B testing de prompts y modelos</li>
+                </ul>
               </div>
+
               <div className="capability-card">
                 <div className="capability-icon">📊</div>
-                <h4>6. Dashboard y Métricas</h4>
-                <p>
-                  <strong>Analytics:</strong> Trazabilidad completa, reportes de SLA, precisión por tipo,
-                  y detección de patrones para mejora continua.
-                </p>
+                <h4>Dashboard y Auditoría</h4>
+                <ul>
+                  <li>Visibilidad completa de decisiones IA</li>
+                  <li>KPIs en tiempo real</li>
+                  <li>Trazabilidad para compliance</li>
+                </ul>
               </div>
             </div>
           </div>
