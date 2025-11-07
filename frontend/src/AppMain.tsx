@@ -41,7 +41,7 @@ function AppMain() {
   // Casos de ejemplo predefinidos
   const ejemplos = {
     "Nueva Sociedad (Completa)": {
-      body: "Estimados, para la empresa 'Los Volcanes SPA', RUT 76.123.456-7, adjunto los documentos para su constitución. Todos los documentos están incluidos según el procedimiento. Saludos cordiales, María González - Ejecutiva Comercial.",
+      body: "Estimados, para la empresa 'Los Volcanes SPA', RUT 18.293.762-2, adjunto los documentos para su constitución. Todos los documentos están incluidos según el procedimiento. Saludos cordiales, María González - Ejecutiva Comercial.",
       adjuntos: "escritura_constitucion.pdf, inscripcion_extracto.pdf, extractos.pdf, publicacion_diario_oficial.pdf"
     },
     "Modificación de Poder (RUT Inválido)": {

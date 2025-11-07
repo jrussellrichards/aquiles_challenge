@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowRight, Shield, Brain, Zap, CheckCircle, Clock, FileCheck, FileText } from 'lucide-react'
+import { ArrowRight, Shield, Brain, CheckCircle, Clock, FileCheck, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import './Landing.css'
 
