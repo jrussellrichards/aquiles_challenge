@@ -1,15 +1,125 @@
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Shield, Brain, CheckCircle, XCircle, List, AlertTriangle, ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react'
+import { ArrowLeft, Shield, Brain, CheckCircle, XCircle, List, AlertTriangle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import './Informe.css'
-import asIsDiagram from './diagrams/as_is.png'
-import toBeDiagram from './diagrams/to_be.png'
-import mvpDiagram from './diagrams/mvp.png'
 
 const Informe = () => {
   const [showIndex, setShowIndex] = useState(false)
+  const [currentTechnicalSlide, setCurrentTechnicalSlide] = useState(0)
   const [currentProcessSlide, setCurrentProcessSlide] = useState(0)
-  const [selectedDiagram, setSelectedDiagram] = useState<{ src: string; alt: string; title: string } | null>(null)
+  const [currentBenefitSlide, setCurrentBenefitSlide] = useState(0)
+
+  // Datos de soluciones técnicas
+  const technicalSolutions = [
+    {
+      title: "1. Nueva Sociedad",
+      kpi: "95% precisión • 30s promedio",
+      challenge: "Validar 4 documentos específicos + RUT",
+      solution: "OCR + Clasificación ML + Validación reglas",
+      steps: [
+        "📄 Detección automática de tipos documento",
+        "🔍 Extracción datos estructurados",
+        "✅ Validación contra reglas negocio",
+        "📊 Score de confianza por documento"
+      ]
+    },
+    {
+      title: "2. Nuevo Poder",
+      kpi: "94% precisión • 25s promedio",
+      challenge: "Interpretar escritura pública modificada",
+      solution: "NLP + Template matching + Validación SIAF",
+      steps: [
+        "📝 Análisis semántico de modificaciones",
+        "🔍 Identificación tipo y alcance poder",
+        "✅ Validación RUT y existencia sociedad",
+        "🎯 Match vs criterios estándar BCI"
+      ]
+    },
+    {
+      title: "3. Poder Banca Persona",
+      kpi: "96% precisión • 20s promedio",
+      challenge: "Distinguir escritura vs instrumento privado",
+      solution: "Clasificación multimodal + OCR avanzado",
+      steps: [
+        "🏛️ Identificación tipo documento legal",
+        "✍️ Verificación firma y legalización",
+        "🔐 Validación datos bancarios",
+        "📈 Score de autenticidad"
+      ]
+    },
+    {
+      title: "4. Reparo",
+      kpi: "93% precisión • 35s promedio",
+      challenge: "Comprender reparo y validar consistencia",
+      solution: "NLU + Document comparison + Logic validation",
+      steps: [
+        "🧠 Comprensión intención reparo",
+        "📑 Comparación documentos vs reparo",
+        "⚖️ Validación consistencia lógica",
+        "💬 Generación mensaje explicación"
+      ]
+    },
+    {
+      title: "5. Revisión",
+      kpi: "92% precisión • 40s promedio",
+      challenge: "Clasificar tipo de revisión y priorizar",
+      solution: "Intent classification + Urgency scoring",
+      steps: [
+        "🎯 Clasificación automática tipo revisión",
+        "⚡ Scoring de urgencia",
+        "👥 Asignación inteligente abogado",
+        "📋 Preparación contexto abogado"
+      ]
+    },
+    {
+      title: "6. Borrador",
+      kpi: "91% precisión • 45s promedio",
+      challenge: "Procesar documento Word y workflow especial",
+      solution: "Document parsing + Template recognition",
+      steps: [
+        "📄 Extracción contenido Word",
+        "🔍 Identificación tipo borrador",
+        "📋 Workflow confirmación cliente",
+        "✅ Validación formato y contenido"
+      ]
+    },
+    {
+      title: "7. Certificado Apoderado",
+      kpi: "97% precisión • 15s promedio",
+      challenge: "Emisión certificado simple pero frecuente",
+      solution: "Template generation + DB lookup",
+      steps: [
+        "🔍 Consulta automática base datos",
+        "📋 Generación certificado estándar",
+        "✅ Validación vigencia poderes",
+        "📧 Envío automático resultado"
+      ]
+    },
+    {
+      title: "8. Modificación Social",
+      kpi: "93% precisión • 30s promedio",
+      challenge: "Diversos tipos de cambios societarios",
+      solution: "Multi-class classification + Change detection",
+      steps: [
+        "🎯 Clasificación tipo modificación",
+        "📄 Extracción datos relevantes",
+        "⚖️ Validación cumplimiento normativo",
+        "📊 Generación resumen cambios"
+      ]
+    },
+    {
+      title: "9. Otros",
+      kpi: "88% precisión • 50s promedio",
+      challenge: "Casos no estándar y excepciones",
+      solution: "Escalation + Human-in-the-loop",
+      steps: [
+        "🎯 Detección caso no estándar",
+        "📋 Clasificación nivel complejidad",
+        "👤 Asignación experto apropiado",
+        "📝 Documentación caso para aprendizaje"
+      ]
+    }
+  ]
 
   // Datos de procesos manuales
   const processTypes = [
@@ -146,14 +256,74 @@ const Informe = () => {
     }
   ]
 
-  // Auto-avance del slider cada 5 segundos
+  // Datos de beneficios
+  const benefits = [
+    {
+      icon: "🚀",
+      title: "Eficiencia Operativa",
+      metrics: [
+        { value: "2d → 1d → h", desc: "Meta inicial: 1 día | Meta 6 meses: horas" },
+        { value: "50% → 100%", desc: "Adopción: 50% inicial, 100% a 6 meses" },
+        { value: "24/7", desc: "Disponibilidad continua sin horarios" }
+      ]
+    },
+    {
+      icon: "🎯",
+      title: "Calidad y Precisión",
+      metrics: [
+        { value: "95%+", desc: "Precisión en clasificación automática" },
+        { value: "0", desc: "Errores por fatiga o distracción" },
+        { value: "100%", desc: "Trazabilidad de todas las decisiones" }
+      ]
+    },
+    {
+      icon: "👥",
+      title: "Impacto Humano",
+      metrics: [
+        { value: "75%", desc: "Tiempo liberado del asistente" },
+        { value: "100%", desc: "Enfoque del abogado en juicio legal" },
+        { value: "+50%", desc: "Satisfacción laboral por valor agregado" }
+      ]
+    },
+    {
+      icon: "💰",
+      title: "Beneficios Económicos",
+      metrics: [
+        { value: "97%", desc: "Reducción de costos operativos" },
+        { value: "< 1 mes", desc: "Tiempo de retorno de inversión" },
+        { value: "$27.9M", desc: "Ahorro anual proyectado" }
+      ]
+    },
+    {
+      icon: "🏢",
+      title: "Ventajas Estratégicas",
+      metrics: [
+        { value: "+90%", desc: "Satisfacción del cliente ejecutivo" },
+        { value: "Competitivo", desc: "Ventaja competitiva en el mercado" },
+        { value: "Escalable", desc: "Base para expansión a otras áreas" }
+      ]
+    },
+    {
+      icon: "🔒",
+      title: "Seguridad y Cumplimiento",
+      metrics: [
+        { value: "100%", desc: "Datos procesados en infraestructura BCI" },
+        { value: "Audit", desc: "Registro completo de todas las acciones" },
+        { value: "GDPR", desc: "Cumplimiento normativo de protección de datos" }
+      ]
+    }
+  ]
+
+  // Auto-avance de sliders cada 5 segundos
   useEffect(() => {
     const interval = setInterval(() => {
+      setCurrentTechnicalSlide(prev => (prev + 1) % technicalSolutions.length)
       setCurrentProcessSlide(prev => (prev + 1) % processTypes.length)
+      setCurrentBenefitSlide(prev => (prev + 1) % benefits.length)
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [processTypes.length])
+  }, [technicalSolutions.length, processTypes.length, benefits.length])
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -194,19 +364,13 @@ const Informe = () => {
             <h3>Índice de Contenidos</h3>
             <nav className="index-nav">
               <button onClick={() => scrollToSection('problema-actual')}>1. El Problema Actual</button>
-              <button onClick={() => scrollToSection('vision-to-be')}>2. La Visión TO BE (Solución Completa)</button>
-              <button onClick={() => scrollToSection('flujo-completo')}>   2.1 AS IS vs TO BE</button>
-              <button onClick={() => scrollToSection('transformacion-roles')}>   2.2 Transformación de Roles</button>
-              <button onClick={() => scrollToSection('justificacion-ia')}>3. Por Qué Inteligencia Artificial</button>
-              <button onClick={() => scrollToSection('mvp-enfoque')}>4. ★ EL MVP: Nuestro Enfoque</button>
-              <button onClick={() => scrollToSection('alcance-mvp')}>   4.1 Los 9 Tipos de Gestión</button>
-              <button onClick={() => scrollToSection('impacto-cuantificado')}>   4.2 Impacto del MVP</button>
-              <button onClick={() => scrollToSection('roadmap')}>   4.3 Roadmap 11 Semanas</button>
-              <button onClick={() => scrollToSection('claves-exito')}>   4.4 Claves del Éxito</button>
-              <button onClick={() => scrollToSection('tecnologia-mvp')}>5. Tecnología del MVP</button>
-              <button onClick={() => scrollToSection('implementacion')}>6. Consideraciones de Implementación</button>
-              <button onClick={() => scrollToSection('vision-futuro')}>7. Visión de Futuro</button>
-              <button onClick={() => scrollToSection('demo')}>8. Prueba el Demo Interactivo</button>
+              <button onClick={() => scrollToSection('justificacion-ia')}>2. Por Qué IA es la Solución</button>
+              <button onClick={() => scrollToSection('flujo-completo')}>3. Comparativa AS IS vs TO BE</button>
+              <button onClick={() => scrollToSection('beneficios-completos')}>4. Beneficios de la Transformación</button>
+              <button onClick={() => scrollToSection('roadmap')}>5. Roadmap de Implementación</button>
+              <button onClick={() => scrollToSection('mvp-costos')}>6. MVP: Inversión y Retorno</button>
+              <button onClick={() => scrollToSection('solucion-tecnica')}>7. Detalle Técnico por Caso</button>
+              <button onClick={() => scrollToSection('transformacion-roles')}>8. Transformación de Roles</button>
             </nav>
           </div>
         </div>
@@ -215,17 +379,105 @@ const Informe = () => {
       {/* Contenido del informe */}
       <div className="informe-container">
 
-        {/* 1. El Problema Actual */}
-        <section id="problema-actual">
-          <div className="section-header">
-            <div className="section-icon-wrapper">
-              <AlertTriangle size={48} />
+        {/* Introducción con Hipótesis */}
+        <section className="informe-intro">
+          <div className="intro-content">
+            <div className="intro-header">
+              <div className="intro-icon"><Brain size={64} /></div>
+              <h1 className="intro-title">Aquiles MVP</h1>
+              <p className="intro-tagline">Agente de IA para Automatización del Triage en Fiscalía BCI</p>
             </div>
-            <h2 className="section-title" data-number="1">El Problema Actual</h2>
-            <p className="section-subtitle">Un cuello de botella operativo que impacta el negocio completo</p>
-          </div>
+            
+            <div className="intro-body">
+              <p className="intro-lead">
+                <strong>Aquiles</strong> es un agente de inteligencia artificial diseñado para transformar el proceso de triage 
+                en Fiscalía BCI, automatizando la clasificación, validación y asignación de solicitudes legales. Este documento 
+                presenta la estrategia de implementación mediante un <strong>MVP (Producto Mínimo Viable)</strong> que demuestra 
+                el valor de la IA en operaciones críticas del negocio.
+              </p>
 
-          <div className="informe-section intro-section">
+              {/* Hipótesis de la Solución */}
+              <div className="hypothesis-section">
+                <h3>🎯 Hipótesis de la Solución</h3>
+                <div className="hypothesis-statement">
+                  <p className="hypothesis-text">
+                    Creemos que <strong>un agente de IA especializado en clasificación y validación automatizada de correos legales</strong> 
+                    ayudará a <strong>los ejecutivos comerciales y al equipo de Fiscalía de BCI</strong> a <strong>reducir el tiempo 
+                    de triage de 2 días a menos de 4 horas</strong> porque:
+                  </p>
+                  
+                  <ul className="hypothesis-assumptions">
+                    <li>
+                      <strong>Patrones Repetibles:</strong> Los correos siguen estructuras predecibles que los modelos de lenguaje 
+                      pueden identificar y clasificar con alta precisión
+                    </li>
+                    <li>
+                      <strong>Validación Determinística:</strong> La validación de RUT chileno y el matching documento-requerimiento 
+                      son tareas algorítmicas automatizables al 100%
+                    </li>
+                    <li>
+                      <strong>Capacidad NLP:</strong> Los LLMs actuales (Gemini, GPT-4) tienen la capacidad comprobada de 
+                      comprender contexto legal y extraer información estructurada
+                    </li>
+                    <li>
+                      <strong>Carga Mecánica:</strong> El 75% del tiempo del asistente se dedica a tareas repetitivas y de 
+                      bajo valor que pueden ser automatizadas
+                    </li>
+                  </ul>
+
+                  <div className="hypothesis-validation">
+                    <h4>📊 Validaremos esta hipótesis mediante:</h4>
+                    <div className="validation-metrics">
+                      <div className="validation-item">
+                        <div className="validation-icon">🎯</div>
+                        <div className="validation-content">
+                          <strong>Precisión ≥ 90%</strong>
+                          <span>en clasificación automática de los 9 tipos de gestión</span>
+                        </div>
+                      </div>
+                      <div className="validation-item">
+                        <div className="validation-icon">⚡</div>
+                        <div className="validation-content">
+                          <strong>Tiempo {'<'} 4 horas</strong>
+                          <span>de respuesta promedio (vs 48h actuales)</span>
+                        </div>
+                      </div>
+                      <div className="validation-item">
+                        <div className="validation-icon">📈</div>
+                        <div className="validation-content">
+                          <strong>Adopción 80%</strong>
+                          <span>del equipo en los primeros 3 meses</span>
+                        </div>
+                      </div>
+                      <div className="validation-item">
+                        <div className="validation-icon">✅</div>
+                        <div className="validation-content">
+                          <strong>Reducción 60%</strong>
+                          <span>en errores de documentación y clasificación</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="intro-conclusion">
+                Este informe detalla cómo Aquiles no solo resuelve el problema operativo inmediato, sino que sienta las 
+                bases para un <strong>ecosistema multi-agente</strong> que puede escalar a otras áreas legales y de back-office 
+                en BCI, generando un ROI de <strong>5,650%</strong> en el primer año.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* 1. El Problema Actual */}
+        <section id="problema-actual" className="informe-section intro-section">
+          <div className="section-icon-wrapper">
+            <AlertTriangle size={48} />
+          </div>
+          <h2 className="section-title" data-number="1">El Problema Actual</h2>
+          <p className="section-subtitle">Un cuello de botella operativo que impacta el negocio completo</p>
+
           <div className="problem-statement">
             <div className="problem-metrics">
               <div className="metric-card">
@@ -268,327 +520,13 @@ const Informe = () => {
               </div>
             </div>
           </div>
-          </div>
         </section>
 
-        {/* 2. La Visión TO BE (Solución Completa) */}
-        <section id="vision-to-be">
-          <div className="section-header">
-            <h2 className="section-title" data-number="2">La Visión TO BE: Solución Completa</h2>
-            <p className="section-subtitle">Ecosistema inteligente de extremo a extremo - La meta final</p>
-          </div>
+        {/* 2. Justificación de la Solución IA */}
+        <section id="justificacion-ia" className="informe-section">
+          <h2 className="section-title" data-number="2">¿Por Qué Inteligencia Artificial?</h2>
+          <p className="section-subtitle">Ventajas estratégicas sobre otras alternativas de automatización</p>
 
-          <div className="informe-section">
-            <div className="vision-intro">
-              <p className="intro-text">
-                Esta sección describe la <strong>solución completa TO BE</strong>: un ecosistema donde la IA maneja 
-                el 100% de las operaciones repetitivas y los humanos se enfocan en estrategia y juicio experto.
-              </p>
-              <div className="vision-note">
-                <AlertTriangle size={20} />
-                <p><strong>Importante:</strong> El MVP (Sección 4) se enfoca SOLO en el cuello de botella del asistente. 
-                Las métricas de esta sección reflejan el potencial completo, no el alcance inicial del proyecto.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 2.1 AS IS vs TO BE */}
-        <section id="flujo-completo">
-          <div className="section-header">
-            <h3 className="subsection-title">2.1 AS IS vs TO BE: Comparativa de Flujos</h3>
-            <p className="section-subtitle">Del proceso manual al ecosistema inteligente</p>
-          </div>
-
-          <div className="informe-section">
-          <div className="flow-comparison">
-            {/* AS IS */}
-            <div className="flow-card flow-as-is">
-              <div className="flow-header">
-                <h3>Flujo Actual (AS IS)</h3>
-                <span className="flow-sla">SLA: 2 Días</span>
-              </div>
-              <ol className="flow-steps">
-                <li>
-                  <span className="step-num">1</span>
-                  <span>Cliente / Ejecutivo envía email</span>
-                </li>
-                <li className="bottleneck-step">
-                  <span className="step-num bottleneck">2</span>
-                  <div className="step-details">
-                    <strong>Asistente (Bottleneck)</strong>
-                    <ul>
-                      <li>Revisa casilla (100+ correos/día)</li>
-                      <li>Clasifica solicitud (9 tipos)</li>
-                      <li>Valida RUT (SIAF / Portal)</li>
-                      <li>Valida documentos según tipo</li>
-                      <li>Devuelve si hay errores</li>
-                      <li>Asigna a abogado</li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <span className="step-num">3</span>
-                  <span>Abogado revisa y redacta</span>
-                </li>
-                <li>
-                  <span className="step-num">4</span>
-                  <span>Abogado responde OK o pide antecedentes</span>
-                </li>
-                <li>
-                  <span className="step-num">5</span>
-                  <span>Ejecutivo comunica solución al cliente</span>
-                  <div className="step-note">⚠️ Demoras por vacaciones, ausencias u olvido</div>
-                </li>
-              </ol>
-              <div className="diagnostic-alert">
-                <XCircle size={20} />
-                <p><strong>Diagnóstico:</strong> 75% del tiempo total concentrado en triage manual (Paso 2)</p>
-              </div>
-            </div>
-
-            {/* TODO - Solución Completa */}
-            <div className="flow-card flow-to-be">
-              <div className="flow-header">
-                <h3>Solución Completa (TODO)</h3>
-                <span className="flow-sla success">SLA: Horas (mismo día)</span>
-              </div>
-              <ol className="flow-steps">
-                <li>
-                  <span className="step-num">1</span>
-                  <span>Cliente / Ejecutivo envía email</span>
-                </li>
-                <li className="ai-step">
-                  <span className="step-num ai">IA</span>
-                  <div className="step-details">
-                    <strong>Agente de Triage 24/7</strong>
-                    <ul>
-                      <li>Lee y entiende el email (IDP)</li>
-                      <li>Clasifica intención (9 tipos)</li>
-                      <li>Valida RUT (dígito + BBDD)</li>
-                      <li>Notifica errores al Ejecutivo</li>
-                      <li>Responde si hay ausencia</li>
-                    </ul>
-                  </div>
-                </li>
-                <li className="ai-step">
-                  <span className="step-num ai">IA</span>
-                  <div className="step-details">
-                    <strong>Asistente y Redactor</strong>
-                    <ul>
-                      <li>Valida documentos vs reglas</li>
-                      <li>Asigna a abogado (criterios + carga)</li>
-                      <li>Prepara borrador (RAG)</li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <span className="step-num">4</span>
-                  <span>Abogado valida, ajusta y aprueba (HITL)</span>
-                </li>
-                <li className="ai-step">
-                  <span className="step-num ai">IA</span>
-                  <div className="step-details">
-                    <strong>Cierre Automático</strong>
-                    <ul>
-                      <li>Recibe OK</li>
-                      <li>Notifica al cliente</li>
-                      <li>Asiste comunicación final</li>
-                      <li>✅ Asistencia inmediata 24/7 (sin demoras)</li>
-                    </ul>
-                  </div>
-                </li>
-              </ol>
-              <div className="value-alert">
-                <CheckCircle size={20} />
-                <p><strong>Valor Completo:</strong> IA absorbe 100% de operaciones repetitivas, humanos enfocados en estrategia y juicio experto</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Diagramas Visuales */}
-          <div className="diagrams-section">
-            <h3 className="diagrams-title">Diagramas de Flujo</h3>
-            <p className="diagrams-subtitle">Visualización completa de la transformación del proceso</p>
-            
-            <div className="diagrams-grid">
-              <div className="diagram-card">
-                <div className="diagram-header">
-                  <h4>Flujo AS IS (Actual)</h4>
-                  <span className="diagram-badge as-is">Manual</span>
-                </div>
-                <div className="diagram-image-container">
-                  <img 
-                    src={asIsDiagram} 
-                    alt="Diagrama del flujo actual AS IS - Proceso manual" 
-                    className="diagram-image"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      const placeholder = target.nextElementSibling as HTMLElement;
-                      target.style.display = 'none';
-                      if (placeholder) placeholder.style.display = 'flex';
-                    }}
-                  />
-                  <button 
-                    className="diagram-zoom-btn"
-                    onClick={() => setSelectedDiagram({ 
-                      src: asIsDiagram, 
-                      alt: 'Diagrama del flujo actual AS IS - Proceso manual',
-                      title: 'Flujo AS IS (Actual)'
-                    })}
-                    aria-label="Ver diagrama en tamaño completo"
-                  >
-                    <ZoomIn size={24} />
-                  </button>
-                  <div className="diagram-placeholder">
-                    <div className="placeholder-icon">📊</div>
-                    <p>Diagrama AS IS</p>
-                    <small>Proceso Manual Actual</small>
-                  </div>
-                </div>
-                <p className="diagram-description">
-                  Proceso actual con cuello de botella en el asistente que maneja manualmente 100+ correos diarios
-                </p>
-              </div>
-
-              <div className="diagram-card">
-                <div className="diagram-header">
-                  <h4>Flujo TO BE (Futuro)</h4>
-                  <span className="diagram-badge to-be">Automatizado</span>
-                </div>
-                <div className="diagram-image-container">
-                  <img 
-                    src={toBeDiagram} 
-                    alt="Diagrama del flujo futuro TO BE - Proceso automatizado con IA" 
-                    className="diagram-image"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      const placeholder = target.nextElementSibling as HTMLElement;
-                      target.style.display = 'none';
-                      if (placeholder) placeholder.style.display = 'flex';
-                    }}
-                  />
-                  <button 
-                    className="diagram-zoom-btn"
-                    onClick={() => setSelectedDiagram({ 
-                      src: toBeDiagram, 
-                      alt: 'Diagrama del flujo futuro TO BE - Proceso automatizado con IA',
-                      title: 'Flujo TO BE (Futuro)'
-                    })}
-                    aria-label="Ver diagrama en tamaño completo"
-                  >
-                    <ZoomIn size={24} />
-                  </button>
-                  <div className="diagram-placeholder">
-                    <div className="placeholder-icon">🤖</div>
-                    <p>Diagrama TO BE</p>
-                    <small>Proceso Automatizado con IA</small>
-                  </div>
-                </div>
-                <p className="diagram-description">
-                  Proceso transformado donde Aquiles maneja triage 24/7 y el abogado se enfoca en validación estratégica
-                </p>
-              </div>
-
-              <div className="diagram-card">
-                <div className="diagram-header">
-                  <h4>MVP: Enfoque del Proyecto</h4>
-                  <span className="diagram-badge architecture">Roadmap</span>
-                </div>
-                <div className="diagram-image-container">
-                  <img 
-                    src={mvpDiagram} 
-                    alt="Diagrama del MVP enfocado en el cuello de botella del asistente" 
-                    className="diagram-image"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      const placeholder = target.nextElementSibling as HTMLElement;
-                      target.style.display = 'none';
-                      if (placeholder) placeholder.style.display = 'flex';
-                    }}
-                  />
-                  <button 
-                    className="diagram-zoom-btn"
-                    onClick={() => setSelectedDiagram({ 
-                      src: mvpDiagram, 
-                      alt: 'Diagrama del MVP enfocado en el cuello de botella del asistente',
-                      title: 'MVP: Enfoque del Proyecto'
-                    })}
-                    aria-label="Ver diagrama en tamaño completo"
-                  >
-                    <ZoomIn size={24} />
-                  </button>
-                  <div className="diagram-placeholder">
-                    <div className="placeholder-icon">🎯</div>
-                    <p>MVP: Enfoque</p>
-                    <small>Cuello de Botella</small>
-                  </div>
-                </div>
-                <p className="diagram-description">
-                  MVP enfocado en eliminar el cuello de botella: el agente asume las tareas del asistente (75% del tiempo del proceso)
-                </p>
-              </div>
-            </div>
-          </div>
-          </div>
-        </section>
-
-        {/* 2.2 Transformación de Roles (TO BE) */}
-        <section id="transformacion-roles">
-          <div className="section-header">
-            <h3 className="subsection-title">2.2 Transformación de Roles</h3>
-            <p className="section-subtitle">Cómo cambian los roles en la solución TO BE completa</p>
-          </div>
-
-          <div className="informe-section">
-          <div className="roles-transformation-section">
-            <div className="vision-note">
-              <AlertTriangle size={20} />
-              <p><strong>Nota TO BE:</strong> Esta transformación muestra el impacto de la solución completa. 
-              El MVP se enfoca solo en el rol del asistente.</p>
-            </div>
-            
-            <div className="roles-grid">
-              <div className="role-card">
-                <h4>Asistente</h4>
-                <div className="role-transformation">
-                  <span className="role-before">DE: Operador Manual</span>
-                  <span className="role-arrow">→</span>
-                  <span className="role-after">A: Supervisor IA</span>
-                </div>
-                <p>Libera 75% de tiempo para casos complejos y mejora continua</p>
-              </div>
-              <div className="role-card">
-                <h4>Abogado</h4>
-                <div className="role-transformation">
-                  <span className="role-before">DE: Redactor</span>
-                  <span className="role-arrow">→</span>
-                  <span className="role-after">A: Validador Experto</span>
-                </div>
-                <p>100% del tiempo en juicio legal sobre borradores de calidad</p>
-              </div>
-              <div className="role-card">
-                <h4>Ejecutivo</h4>
-                <div className="role-transformation">
-                  <span className="role-before">DE: Intermediario</span>
-                  <span className="role-arrow">→</span>
-                  <span className="role-after">A: Gestor Relación</span>
-                </div>
-                <p>IA maneja loops y ausencias; foco en estrategia de cliente</p>
-              </div>
-            </div>
-          </div>
-          </div>
-        </section>
-
-        {/* 3. Justificación de la Solución IA */}
-        <section id="justificacion-ia">
-          <div className="section-header">
-            <h2 className="section-title" data-number="3">¿Por Qué Inteligencia Artificial?</h2>
-            <p className="section-subtitle">Ventajas estratégicas sobre otras alternativas de automatización</p>
-          </div>
-
-          <div className="informe-section">
           <div className="justification-content">
             <div className="ai-advantages">
               <h3>Ventajas de la IA sobre Automatización Tradicional</h3>
@@ -678,95 +616,200 @@ const Informe = () => {
               </div>
             </div>
           </div>
-          </div>
         </section>
 
-        {/* 4. EL MVP: Nuestro Enfoque */}
-        <section id="mvp-enfoque">
-          <div className="section-header">
-            <h2 className="section-title" data-number="4">★ EL MVP: Nuestro Enfoque</h2>
-            <p className="section-subtitle">Proyecto enfocado en eliminar el cuello de botella del asistente</p>
-          </div>
+        {/* 3. AS IS vs TODO (Solución Completa) */}
+        <section id="flujo-completo" className="informe-section">
+          <h2 className="section-title" data-number="3">AS IS vs TODO: La Solución Completa</h2>
+          <p className="section-subtitle">Visión completa de transformación: de proceso manual a ecosistema inteligente</p>
 
-          <div className="informe-section">
-            <div className="mvp-intro">
-              <div className="mvp-highlight-box">
-                <h3>🎯 Alcance del MVP</h3>
-                <p className="intro-text">
-                  El MVP <strong>NO implementa la solución TO BE completa</strong>. Se enfoca estratégicamente en el 
-                  <strong> cuello de botella identificado: las tareas del asistente</strong> que consumen el 75% del tiempo total del proceso.
-                </p>
-                <div className="mvp-scope-grid">
-                  <div className="scope-item in">
-                    <CheckCircle size={24} className="icon-in" />
-                    <div>
-                      <h4>✅ DENTRO del MVP</h4>
-                      <ul>
-                        <li>Clasificación automática de los 9 tipos de solicitud</li>
-                        <li>Validación de RUT y documentos</li>
-                        <li>Asignación inteligente a abogados</li>
-                        <li>Detección de errores y solicitud de correcciones</li>
-                        <li>Manejo de ausencias y loops operativos</li>
-                      </ul>
-                    </div>
+          <div className="flow-comparison">
+            {/* AS IS */}
+            <div className="flow-card flow-as-is">
+              <div className="flow-header">
+                <h3>Flujo Actual (AS IS)</h3>
+                <span className="flow-sla">SLA: 2 Días</span>
+              </div>
+              <ol className="flow-steps">
+                <li>
+                  <span className="step-num">1</span>
+                  <span>Cliente / Ejecutivo envía email</span>
+                </li>
+                <li className="bottleneck-step">
+                  <span className="step-num bottleneck">2</span>
+                  <div className="step-details">
+                    <strong>Asistente (Bottleneck)</strong>
+                    <ul>
+                      <li>Revisa casilla (100+ correos/día)</li>
+                      <li>Clasifica solicitud (9 tipos)</li>
+                      <li>Valida RUT (SIAF / Portal)</li>
+                      <li>Valida documentos según tipo</li>
+                      <li>Devuelve si hay errores</li>
+                      <li>Asigna a abogado</li>
+                    </ul>
                   </div>
-                  <div className="scope-item out">
-                    <XCircle size={24} className="icon-out" />
-                    <div>
-                      <h4>❌ FUERA del MVP</h4>
-                      <ul>
-                        <li>Generación automática de borradores (RAG)</li>
-                        <li>Redacción de respuestas completas</li>
-                        <li>Cierre automático de casos</li>
-                        <li>Comunicación directa con clientes</li>
-                      </ul>
-                    </div>
+                </li>
+                <li>
+                  <span className="step-num">3</span>
+                  <span>Abogado revisa y redacta</span>
+                </li>
+                <li>
+                  <span className="step-num">4</span>
+                  <span>Abogado responde OK o pide antecedentes</span>
+                </li>
+                <li>
+                  <span className="step-num">5</span>
+                  <span>Ejecutivo comunica solución al cliente</span>
+                </li>
+              </ol>
+              <div className="diagnostic-alert">
+                <XCircle size={20} />
+                <p><strong>Diagnóstico:</strong> 75% del tiempo total concentrado en triage manual (Paso 2)</p>
+              </div>
+            </div>
+
+            {/* TODO - Solución Completa */}
+            <div className="flow-card flow-to-be">
+              <div className="flow-header">
+                <h3>Solución Completa (TODO)</h3>
+                <span className="flow-sla success">SLA: Horas (mismo día)</span>
+              </div>
+              <ol className="flow-steps">
+                <li>
+                  <span className="step-num">1</span>
+                  <span>Cliente / Ejecutivo envía email</span>
+                </li>
+                <li className="ai-step">
+                  <span className="step-num ai">IA</span>
+                  <div className="step-details">
+                    <strong>Agente de Triage 24/7</strong>
+                    <ul>
+                      <li>Lee y entiende el email (IDP)</li>
+                      <li>Clasifica intención (9 tipos)</li>
+                      <li>Valida RUT (dígito + BBDD)</li>
+                      <li>Notifica errores al Ejecutivo</li>
+                      <li>Responde si hay ausencia</li>
+                    </ul>
                   </div>
-                </div>
+                </li>
+                <li className="ai-step">
+                  <span className="step-num ai">IA</span>
+                  <div className="step-details">
+                    <strong>Asistente y Redactor</strong>
+                    <ul>
+                      <li>Valida documentos vs reglas</li>
+                      <li>Asigna a abogado (criterios + carga)</li>
+                      <li>Prepara borrador (RAG)</li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <span className="step-num">4</span>
+                  <span>Abogado valida, ajusta y aprueba (HITL)</span>
+                </li>
+                <li className="ai-step">
+                  <span className="step-num ai">IA</span>
+                  <div className="step-details">
+                    <strong>Cierre Automático</strong>
+                    <ul>
+                      <li>Recibe OK</li>
+                      <li>Notifica al cliente</li>
+                      <li>Asiste comunicación final</li>
+                    </ul>
+                  </div>
+                </li>
+              </ol>
+              <div className="value-alert">
+                <CheckCircle size={20} />
+                <p><strong>Valor Completo:</strong> IA absorbe 100% de operaciones repetitivas, humanos enfocados en estrategia y juicio experto</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4.1 Los 9 Tipos de Gestión */}
-        <section id="alcance-mvp">
-          <div className="section-header">
-            <h3 className="subsection-title">4.1 Los 9 Tipos de Gestión Societaria</h3>
-            <p className="section-subtitle">El MVP cubre el 100% de los casos que maneja Fiscalía</p>
-          </div>
+        {/* 4. Beneficios de la Solución Completa */}
+        <section id="beneficios-completos" className="informe-section">
+          <h2 className="section-title" data-number="4">Beneficios de la Transformación</h2>
+          <p className="section-subtitle">Impacto cuantitativo y cualitativo de la transformación total</p>
 
-          <div className="informe-section process-detail-section">
+          <div className="slider-container">
+            <div className="slider-navigation">
+              {benefits.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentBenefitSlide ? 'active' : ''}`}
+                  onClick={() => setCurrentBenefitSlide(index)}
+                  aria-label={`Ir a beneficio ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="slider-content">
+              <button
+                className="slider-arrow left"
+                onClick={() => setCurrentBenefitSlide(prev => 
+                  prev === 0 ? benefits.length - 1 : prev - 1
+                )}
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={32} />
+              </button>
+
+              <div className="benefit-category active">
+                <h3>{benefits[currentBenefitSlide].icon} {benefits[currentBenefitSlide].title}</h3>
+                <div className="benefit-metrics">
+                  {benefits[currentBenefitSlide].metrics.map((metric, idx) => (
+                    <div key={idx} className="metric-item">
+                      <div className="metric-value">{metric.value}</div>
+                      <div className="metric-desc">{metric.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                className="slider-arrow right"
+                onClick={() => setCurrentBenefitSlide(prev => 
+                  (prev + 1) % benefits.length
+                )}
+                aria-label="Siguiente"
+              >
+                <ChevronRight size={32} />
+              </button>
+            </div>
+
+            <div className="slider-counter">
+              {currentBenefitSlide + 1} / {benefits.length}
+            </div>
+          </div>
+        </section>
+
+        {/* Detalle del Proceso Actual */}
+        <section id="proceso-detalle" className="informe-section process-detail-section">
+          <h3 className="subsection-title">El Trabajo del Asistente Hoy</h3>
+          <p className="section-subtitle">Los 9 tipos de solicitudes que el asistente clasifica manualmente cada día</p>
+          
           <div className="process-intro">
-            <h3>Alcance Completo</h3>
+            <h3>Alcance y Contexto</h3>
             <p>
-              El MVP automatiza <strong>todos los tipos de solicitudes</strong> recibidas a través del correo genérico 
+              El proceso actual detalla la revisión de documentación recibida a través del correo genérico 
               <strong> "Asistente Sociedades Fiscalía"</strong>, proveniente de oficinas de la Región Metropolitana 
               enviada por ejecutivos o asistentes.
             </p>
           </div>
 
-          {/* Layout de 2 columnas: Navegación + Slider */}
-          <div className="cases-layout">
-            {/* Columna izquierda: Navegación compacta */}
-            <div className="cases-navigation-sidebar">
-              <h4>Tipos de Gestión</h4>
-              <div className="cases-list">
-                {processTypes.map((processType, index) => (
-                  <button
-                    key={index}
-                    className={`case-item ${index === currentProcessSlide ? 'active' : ''}`}
-                    onClick={() => setCurrentProcessSlide(index)}
-                  >
-                    <span className="case-num">{processType.number}</span>
-                    <span className="case-label">{processType.title}</span>
-                  </button>
-                ))}
-              </div>
+          <div className="slider-container">
+            <div className="slider-navigation">
+              {processTypes.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentProcessSlide ? 'active' : ''}`}
+                  onClick={() => setCurrentProcessSlide(index)}
+                  aria-label={`Ir a proceso ${index + 1}`}
+                />
+              ))}
             </div>
 
-            {/* Columna derecha: Slider */}
-            <div className="cases-slider">
-              <div className="slider-container">
             <div className="slider-content">
               <button
                 className="slider-arrow left"
@@ -793,7 +836,7 @@ const Informe = () => {
                     </ul>
                   </div>
                   <div className="ai-solution">
-                    <h5>Automatización MVP:</h5>
+                    <h5>Solución con Aquiles:</h5>
                     <ul>
                       {processTypes[currentProcessSlide].aiSolution.map((item, idx) => (
                         <li key={idx}><strong>{item.split(':')[0]}:</strong> {item.split(':')[1] || item}</li>
@@ -818,57 +861,232 @@ const Informe = () => {
               {currentProcessSlide + 1} / {processTypes.length}
             </div>
           </div>
+
+          <div className="ai-capabilities">
+            <h3>Cómo Funciona Aquiles: Arquitectura del Agente IA</h3>
+            <div className="capabilities-grid">
+              <div className="capability-card">
+                <div className="capability-icon">📧</div>
+                <h4>1. Recepción Inteligente (IDP)</h4>
+                <p>
+                  <strong>Intelligent Document Processing:</strong> Lee y comprende emails y adjuntos.
+                  Extrae información estructurada de documentos no estructurados (PDFs, Word, imágenes).
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">🎯</div>
+                <h4>2. Clasificación Multi-Clase</h4>
+                <p>
+                  <strong>LLM Classifier:</strong> Analiza el contenido y clasifica automáticamente entre 
+                  los 9 tipos de gestión con 95%+ de precisión.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">✅</div>
+                <h4>3. Validación Automática</h4>
+                <p>
+                  <strong>Rules Engine:</strong> Valida RUT (dígito verificador), consulta SIAF/Portal, 
+                  verifica completitud documental según reglas de cada tipo.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">📝</div>
+                <h4>4. Generación de Borradores (RAG)</h4>
+                <p>
+                  <strong>Retrieval-Augmented Generation:</strong> Genera informes y respuestas basadas 
+                  exclusivamente en documentos internos BCI, eliminando alucinaciones.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">👤</div>
+                <h4>5. Validación Humana (HITL)</h4>
+                <p>
+                  <strong>Human-in-the-Loop:</strong> El abogado revisa y aprueba las decisiones críticas. 
+                  La IA propone, el humano dispone.
+                </p>
+              </div>
+              <div className="capability-card">
+                <div className="capability-icon">🔄</div>
+                <h4>6. Aprendizaje Continuo</h4>
+                <p>
+                  <strong>Feedback Loop:</strong> Cada corrección del abogado entrena al sistema. 
+                  Aquiles mejora con cada caso procesado.
+                </p>
+              </div>
             </div>
           </div>
+
+          <div className="value-proposition">
+            <h3>Propuesta de Valor: Reemplazo 100% del Triage Manual</h3>
+            <div className="value-comparison">
+              <div className="value-column current">
+                <h4>HOY (Asistente Manual)</h4>
+                <ul>
+                  <li>❌ 100+ correos/día procesados secuencialmente</li>
+                  <li>❌ 2 días SLA promedio</li>
+                  <li>❌ Dependencia de horario laboral</li>
+                  <li>❌ Errores humanos en clasificación</li>
+                  <li>❌ Tiempo del abogado en redacción</li>
+                  <li>❌ Sin trazabilidad digital</li>
+                </ul>
+              </div>
+              <div className="value-column future">
+                <h4>MAÑANA (Aquiles IA)</h4>
+                <ul>
+                  <li>✅ Procesamiento paralelo ilimitado</li>
+                  <li>✅ Horas SLA (mismo día)</li>
+                  <li>✅ Disponibilidad 24/7/365</li>
+                  <li>✅ 95%+ precisión en clasificación</li>
+                  <li>✅ Abogado enfocado en juicio legal</li>
+                  <li>✅ Auditoría completa de cada decisión</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* 4.2 Impacto del MVP */}
-        <section id="impacto-cuantificado">
-          <div className="section-header">
-            <h3 className="subsection-title">4.2 Impacto Cuantificado del MVP</h3>
-            <p className="section-subtitle">Métricas reales del proyecto enfocado en el asistente</p>
-          </div>
+        {/* 7. Solución Técnica por Punto */}
+        <section id="solucion-tecnica" className="informe-section">
+          <h2 className="section-title" data-number="7">Detalle Técnico por Caso</h2>
+          <p className="section-subtitle">Cómo la IA aborda específicamente cada uno de los 9 tipos de gestión con KPIs medibles</p>
 
-          <div className="informe-section">
-            <div className="benefits-grid">
-              <div className="benefit-card">
-                <div className="benefit-number">75%</div>
-                <h4>Tiempo Liberado</h4>
-                <p>Del triage manual a supervisión IA</p>
+          <div className="slider-container">
+            <div className="slider-navigation">
+              {technicalSolutions.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentTechnicalSlide ? 'active' : ''}`}
+                  onClick={() => setCurrentTechnicalSlide(index)}
+                  aria-label={`Ir a solución ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="slider-content">
+              <button
+                className="slider-arrow left"
+                onClick={() => setCurrentTechnicalSlide(prev => 
+                  prev === 0 ? technicalSolutions.length - 1 : prev - 1
+                )}
+                aria-label="Anterior"
+              >
+                <ChevronLeft size={32} />
+              </button>
+
+              <div className="technical-solution-card active">
+                <div className="solution-header">
+                  <h4>{technicalSolutions[currentTechnicalSlide].title}</h4>
+                  <div className="solution-kpi">{technicalSolutions[currentTechnicalSlide].kpi}</div>
+                </div>
+                <div className="solution-details">
+                  <div className="current-challenge">
+                    <strong>Desafío:</strong> {technicalSolutions[currentTechnicalSlide].challenge}
+                  </div>
+                  <div className="ai-approach">
+                    <strong>Solución IA:</strong> {technicalSolutions[currentTechnicalSlide].solution}
+                  </div>
+                  <div className="implementation-steps">
+                    <ul>
+                      {technicalSolutions[currentTechnicalSlide].steps.map((step, idx) => (
+                        <li key={idx}>{step}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className="benefit-card">
-                <div className="benefit-number">0</div>
-                <h4>Correos Manuales</h4>
-                <p>Clasificación automática 24/7</p>
+
+              <button
+                className="slider-arrow right"
+                onClick={() => setCurrentTechnicalSlide(prev => 
+                  (prev + 1) % technicalSolutions.length
+                )}
+                aria-label="Siguiente"
+              >
+                <ChevronRight size={32} />
+              </button>
+            </div>
+
+            <div className="slider-counter">
+              {currentTechnicalSlide + 1} / {technicalSolutions.length}
+            </div>
+          </div>
+        </section>
+        
+        {/* 8. Transformación de Roles */}
+        <section id="transformacion-roles" className="informe-section">
+          <h2 className="section-title" data-number="8">Transformación de Roles</h2>
+          <p className="section-subtitle">De tareas operativas a supervisión estratégica</p>
+          
+          <div className="roles-grid">
+            <div className="role-card">
+              <h3>Asistente</h3>
+              <div className="role-transformation">
+                <span className="role-before">DE: Operador Manual</span>
+                <span className="role-arrow">→</span>
+                <span className="role-after">A: Supervisor IA</span>
               </div>
-              <div className="benefit-card">
-                <div className="benefit-number">95%</div>
-                <h4>Precisión IA</h4>
-                <p>Clasificación automática confiable</p>
+              <p>Libera 75% de tiempo para casos complejos y mejora continua</p>
+            </div>
+            <div className="role-card">
+              <h3>Abogado</h3>
+              <div className="role-transformation">
+                <span className="role-before">DE: Redactor</span>
+                <span className="role-arrow">→</span>
+                <span className="role-after">A: Validador Experto</span>
               </div>
-              <div className="benefit-card">
-                <div className="benefit-number">10x</div>
-                <h4>Productividad</h4>
-                <p>Mismo asistente, 10x más eficiente</p>
+              <p>100% del tiempo en juicio legal sobre borradores de calidad</p>
+            </div>
+            <div className="role-card">
+              <h3>Ejecutivo</h3>
+              <div className="role-transformation">
+                <span className="role-before">DE: Intermediario</span>
+                <span className="role-arrow">→</span>
+                <span className="role-after">A: Gestor Relación</span>
               </div>
-              <div className="benefit-card">
-                <div className="benefit-number">2d → h</div>
-                <h4>SLA Mejorado</h4>
-                <p>De días a horas de respuesta</p>
-              </div>
+              <p>IA maneja loops y ausencias; foco en estrategia de cliente</p>
             </div>
           </div>
         </section>
 
-        {/* 4.3 Roadmap del MVP */}
-        <section id="roadmap">
-          <div className="section-header">
-            <h3 className="subsection-title">4.3 Roadmap de Implementación</h3>
-            <p className="section-subtitle">Entrega ágil en 11 semanas</p>
+        {/* Beneficios */}
+        <section id="beneficios" className="informe-section">
+          <h3 className="subsection-title">Impacto en el Asistente</h3>
+          <p className="section-subtitle">Cómo Aquiles transforma el rol del asistente de bottleneck operativo a supervisor estratégico</p>
+          
+          <div className="benefits-grid">
+            <div className="benefit-card">
+              <div className="benefit-number">75%</div>
+              <h4>Tiempo Liberado</h4>
+              <p>Del triage manual a supervisión IA</p>
+            </div>
+            <div className="benefit-card">
+              <div className="benefit-number">0</div>
+              <h4>Correos Manuales</h4>
+              <p>Clasificación automática 24/7</p>
+            </div>
+            <div className="benefit-card">
+              <div className="benefit-number">95%</div>
+              <h4>Precisión IA</h4>
+              <p>Clasificación automática confiable</p>
+            </div>
+            <div className="benefit-card">
+              <div className="benefit-number">10x</div>
+              <h4>Productividad</h4>
+              <p>Mismo asistente, 10x más eficiente</p>
+            </div>
+            <div className="benefit-card">
+              <div className="benefit-number">2d → h</div>
+              <h4>SLA Mejorado</h4>
+              <p>De días a horas de respuesta</p>
+            </div>
           </div>
+        </section>
 
-          <div className="informe-section">
+        {/* 5. Roadmap */}
+        <section id="roadmap" className="informe-section">
+          <h2 className="section-title" data-number="5">Roadmap de Implementación</h2>
+          <p className="section-subtitle">Entrega ágil en 11 semanas</p>
+          
           <div className="roadmap-timeline">
             <div className="timeline-item">
               <div className="timeline-marker">1</div>
@@ -903,17 +1121,121 @@ const Informe = () => {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* MVP: Inversión y Retorno */}
+        <section id="mvp-costos" className="informe-section">
+          <h2 className="section-title" data-number="6">MVP: Inversión y Retorno</h2>
+          <p className="section-subtitle">Caso de negocio con números reales</p>
+
+          {/* Desglose de Costos */}
+          <div className="cost-breakdown">
+            <h3>💰 Inversión Anual</h3>
+            <div className="cost-grid">
+              <div className="cost-card">
+                <div className="cost-icon">🤖</div>
+                <h4>Agente IA</h4>
+                <div className="cost-amount">$36/mes</div>
+                <div className="cost-detail">$432/año</div>
+                <p>Procesamiento inteligente de solicitudes con Gemini API</p>
+              </div>
+              
+              <div className="cost-card">
+                <div className="cost-icon">🏗️</div>
+                <h4>Arquitectura Cloud</h4>
+                <div className="cost-amount">$6.8/mes</div>
+                <div className="cost-detail">$82/año</div>
+                <p>Infraestructura serverless escalable</p>
+              </div>
+              
+              <div className="cost-card highlight">
+                <div className="cost-icon">💰</div>
+                <h4>Inversión Total</h4>
+                <div className="cost-amount">$485,352</div>
+                <div className="cost-detail">$42.8/mes promedio</div>
+                <p>Basado en 6,000 requests/mes con 1,000 tokens entrada y 500 tokens salida</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Comparación de Ahorro */}
+          <div className="savings-comparison">
+            <div className="comparison-item current">
+              <h4>💼 Situación Actual (HOY)</h4>
+              <div className="comparison-amount">$28.8M/año</div>
+              <div className="comparison-detail">$2.4M/mes</div>
+              <p>2 asistentes dedicados a validaciones</p>
+            </div>
+            
+            <div className="comparison-arrow">→</div>
+            
+            <div className="comparison-item future">
+              <h4>🚀 Con Aquiles (TO BE)</h4>
+              <div className="comparison-amount">$900K/año</div>
+              <div className="comparison-detail">$75K/mes</div>
+              <p>1 asistente para supervisión estratégica + sistema MVP</p>
+            </div>
+            
+            <div className="comparison-arrow">=</div>
+            
+            <div className="comparison-item savings">
+              <h4>✨ Ahorro Total</h4>
+              <div className="comparison-amount">$27.9M/año</div>
+              <div className="comparison-detail">$2.325M/mes</div>
+              <p>Liberación de 315 HH mensuales para tareas de mayor valor</p>
+            </div>
+          </div>
+
+          {/* Proyección de ROI */}
+          <div className="roi-projection">
+            <h3>📈 Proyección de Retorno</h3>
+            <div className="roi-chart">
+              <div className="roi-timeline">
+                <div className="roi-point">
+                  <div className="roi-month">Inversión</div>
+                  <div className="roi-value">$485K</div>
+                  <div className="roi-desc">Costo anual MVP</div>
+                </div>
+                <div className="roi-point">
+                  <div className="roi-month">Mes 1</div>
+                  <div className="roi-value">$2.3M</div>
+                  <div className="roi-desc">Ahorro mensual</div>
+                </div>
+                <div className="roi-point highlight">
+                  <div className="roi-month">Año 1</div>
+                  <div className="roi-value">$27.9M</div>
+                  <div className="roi-desc">Ahorro anual total</div>
+                </div>
+                <div className="roi-point">
+                  <div className="roi-month">ROI</div>
+                  <div className="roi-value">5,650%</div>
+                  <div className="roi-desc">Retorno primer año</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="roi-summary">
+              <div className="roi-highlight">
+                <span className="roi-label">Payback:</span>
+                <span className="roi-number">{'<'} 1 semana</span>
+              </div>
+              <div className="roi-highlight">
+                <span className="roi-label">Adopción KPI:</span>
+                <span className="roi-number">50% → 100% en 6 meses</span>
+              </div>
+              <div className="roi-highlight">
+                <span className="roi-label">SLA KPI:</span>
+                <span className="roi-number">2 días → horas</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* 4.4 Claves del Éxito */}
-        <section id="claves-exito">
-          <div className="section-header">
-            <h3 className="subsection-title">4.4 Claves del Éxito del MVP</h3>
-            <p className="section-subtitle">Alianza basada en conocimiento, feedback y datos</p>
-          </div>
-
-          <div className="informe-section">
+        {/* Claves del Éxito */}
+        <section id="claves-exito" className="informe-section">
+          <h3 className="subsection-title">Claves del Éxito</h3>
+          <p className="section-subtitle">Alianza basada en conocimiento, feedback y datos</p>
+          
           <div className="pillars-grid">
             <div className="pillar-card">
               <div className="pillar-icon">🧠</div>
@@ -931,78 +1253,34 @@ const Informe = () => {
               <p>20-30 correos por categoría anonimizados</p>
             </div>
           </div>
-          </div>
         </section>
 
-        {/* 5. Tecnología del MVP */}
-        <section id="tecnologia-mvp">
-          <div className="section-header">
-            <h2 className="section-title" data-number="5">Tecnología del MVP</h2>
-            <p className="section-subtitle">Stack técnico diseñado para precisión, escalabilidad y evolución continua</p>
-          </div>
-
-          <div className="informe-section">
-            <div className="capabilities-grid">
-              <div className="capability-card">
-                <div className="capability-icon">📧</div>
-                <h4>1. Recepción Inteligente (IDP)</h4>
-                <p>
-                  <strong>Intelligent Document Processing:</strong> Lee y comprende emails y adjuntos.
-                  Extrae información estructurada de documentos no estructurados (PDFs, Word, imágenes).
-                </p>
-              </div>
-              <div className="capability-card">
-                <div className="capability-icon">🎯</div>
-                <h4>2. Clasificación Multi-Clase</h4>
-                <p>
-                  <strong>LLM Classifier:</strong> Analiza el contenido y clasifica automáticamente entre 
-                  los 9 tipos de gestión con 95%+ de precisión.
-                </p>
-              </div>
-              <div className="capability-card">
-                <div className="capability-icon">✅</div>
-                <h4>3. Validación Automática</h4>
-                <p>
-                  <strong>Rules Engine:</strong> Valida RUT (dígito verificador), consulta SIAF/Portal, 
-                  verifica completitud documental según reglas de cada tipo.
-                </p>
-              </div>
-              <div className="capability-card">
-                <div className="capability-icon">🎯</div>
-                <h4>4. Asignación Inteligente</h4>
-                <p>
-                  <strong>Smart Routing:</strong> Asigna casos a abogados según especialidad, carga de trabajo
-                  y disponibilidad, optimizando distribución.
-                </p>
-              </div>
-              <div className="capability-card">
-                <div className="capability-icon">🔄</div>
-                <h4>5. Gestión de Loops</h4>
-                <p>
-                  <strong>Error Handling:</strong> Detecta documentación faltante, solicita correcciones,
-                  maneja ausencias y reenvíos automáticamente.
-                </p>
-              </div>
-              <div className="capability-card">
-                <div className="capability-icon">📊</div>
-                <h4>6. Dashboard y Métricas</h4>
-                <p>
-                  <strong>Analytics:</strong> Trazabilidad completa, reportes de SLA, precisión por tipo,
-                  y detección de patrones para mejora continua.
-                </p>
-              </div>
+        {/* Visión de Futuro */}
+        <section id="vision-futuro" className="informe-section">
+          <h3 className="subsection-title">Visión de Futuro: Aquiles</h3>
+          <p className="section-subtitle">Primera piedra de un ecosistema multi-agente legal</p>
+          
+          <div className="vision-grid">
+            <div className="vision-card">
+              <h4>Asistente Core</h4>
+              <p>Evoluciona hacia núcleo operativo completo de Fiscalía</p>
+            </div>
+            <div className="vision-card">
+              <h4>Cerebro Vivo</h4>
+              <p>Carga continua de normativas y protocolos actualizados</p>
+            </div>
+            <div className="vision-card">
+              <h4>Ecosistema Multi-Agente</h4>
+              <p>Agentes especializados por dominio legal específico</p>
             </div>
           </div>
         </section>
 
-        {/* 6. Consideraciones de Implementación */}
-        <section id="implementacion">
-          <div className="section-header">
-            <h2 className="section-title" data-number="6">Consideraciones de Implementación</h2>
-            <p className="section-subtitle">Alineación de tecnología, seguridad y reglas de negocio</p>
-          </div>
-
-          <div className="informe-section">
+        {/* Implementación */}
+        <section id="implementacion" className="informe-section last-section">
+          <h3 className="subsection-title">Consideraciones de Implementación</h3>
+          <p className="section-subtitle">Alineación de tecnología, seguridad y reglas de negocio</p>
+          
           <div className="implementation-grid">
             <div className="implementation-card">
               <h4>Tecnología</h4>
@@ -1029,65 +1307,17 @@ const Informe = () => {
               </ul>
             </div>
           </div>
-          </div>
         </section>
 
-        {/* 7. Visión de Futuro */}
-        <section id="vision-futuro">
-          <div className="section-header">
-            <h2 className="section-title" data-number="7">Visión de Futuro: Aquiles</h2>
-            <p className="section-subtitle">Primera piedra de un ecosistema multi-agente legal</p>
-          </div>
-
-          <div className="informe-section">
-            <div className="vision-intro">
-              <p className="intro-text">
-                <strong>Aquiles está diseñado para eliminar completamente la automatización manual</strong>, 
-                liberando a los especialistas humanos para que se enfoquen exclusivamente en lo que realmente genera valor: 
-                <strong> análisis estratégico, juicio experto y relaciones de alto impacto</strong>.
-              </p>
-              <p className="intro-text">
-                Este MVP es solo el comienzo. Aquiles está construido para <strong>evolucionar y escalar</strong>, 
-                con la capacidad de alimentarse continuamente de información crítica: <strong>normativas actualizadas, 
-                relaciones familiares, jurisprudencia, precedentes corporativos</strong> y cualquier documento relevante. 
-                El objetivo final: <strong>responder cualquier pregunta legal compleja en segundos</strong>, 
-                con precisión experta y contexto completo.
-              </p>
-            </div>
-
-            <div className="vision-grid">
-              <div className="vision-card">
-                <h4>Asistente Core</h4>
-                <p>Evoluciona hacia núcleo operativo completo de Fiscalía</p>
-              </div>
-              <div className="vision-card">
-                <h4>Cerebro Vivo</h4>
-                <p>Carga continua de normativas y protocolos actualizados</p>
-              </div>
-              <div className="vision-card">
-                <h4>Ecosistema Multi-Agente</h4>
-                <p>Agentes especializados por dominio legal específico</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 8. Demo Interactivo */}
-        <section id="demo">
-          <div className="section-header">
-            <h2 className="section-title" data-number="8">Prueba el Demo Interactivo</h2>
-            <p className="section-subtitle">Experimenta el proceso de triage automatizado</p>
-          </div>
-          
-          <div className="informe-section">
-            <div className="cta-box">
-              <h3>¿Listo para transformar Fiscalía?</h3>
-              <p>Prueba el demo funcional y descubre el potencial de Aquiles en acción</p>
-              <Link to="/app" className="cta-button-large">
-                <Brain size={24} />
-                <span>Probar Demo Interactivo</span>
-              </Link>
-            </div>
+        {/* CTA Final */}
+        <section className="informe-cta">
+          <div className="cta-box">
+            <h2>¿Listo para transformar Fiscalía?</h2>
+            <p>Prueba el demo funcional y descubre el potencial de Aquiles</p>
+            <Link to="/app" className="cta-button-large">
+              <Brain size={24} />
+              <span>Probar Demo Interactivo</span>
+            </Link>
           </div>
         </section>
 
@@ -1107,31 +1337,6 @@ const Informe = () => {
           </div>
         </div>
       </footer>
-
-      {/* Modal de Diagrama Ampliado */}
-      {selectedDiagram && (
-        <div className="diagram-modal" onClick={() => setSelectedDiagram(null)}>
-          <div className="diagram-modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="diagram-modal-header">
-              <h3>{selectedDiagram.title}</h3>
-              <button 
-                className="diagram-modal-close"
-                onClick={() => setSelectedDiagram(null)}
-                aria-label="Cerrar"
-              >
-                <X size={28} />
-              </button>
-            </div>
-            <div className="diagram-modal-image-container">
-              <img 
-                src={selectedDiagram.src} 
-                alt={selectedDiagram.alt}
-                className="diagram-modal-image"
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
