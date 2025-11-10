@@ -215,6 +215,97 @@ const Informe = () => {
       {/* Contenido del informe */}
       <div className="informe-container">
 
+        {/* Introducción con Hipótesis */}
+        <section className="informe-intro">
+          <div className="intro-content">
+            <div className="intro-header">
+              <div className="intro-icon"><Brain size={64} /></div>
+              <h1 className="intro-title">Aquiles MVP</h1>
+              <p className="intro-tagline">Agente de IA para Automatización del Triage en Fiscalía BCI</p>
+            </div>
+            
+            <div className="intro-body">
+              <p className="intro-lead">
+                <strong>Aquiles</strong> es un agente de inteligencia artificial diseñado para transformar el proceso de triage 
+                en Fiscalía BCI, automatizando la clasificación, validación y asignación de solicitudes legales. Este documento 
+                presenta la estrategia de implementación mediante un <strong>MVP (Producto Mínimo Viable)</strong> que demuestra 
+                el valor de la IA en operaciones críticas del negocio.
+              </p>
+
+              {/* Hipótesis de la Solución */}
+              <div className="hypothesis-section">
+                <h3>🎯 Hipótesis de la Solución</h3>
+                <div className="hypothesis-statement">
+                  <p className="hypothesis-text">
+                     <strong>Un sistema de agentes de IA especializados en clasificación y validación automatizada de correos legales </strong> 
+                    ayudará a <strong>los ejecutivos comerciales y al equipo de Fiscalía de BCI</strong> a <strong>reducir el tiempo 
+                    de triage de 2 días a menos de 4 horas</strong> porque:
+                  </p>
+                  
+                  <ul className="hypothesis-assumptions">
+                    <li>
+                      <strong>Patrones Repetibles:</strong> Los correos siguen estructuras predecibles que los modelos de lenguaje 
+                      pueden identificar y clasificar con alta precisión
+                    </li>
+                    <li>
+                      <strong>Validación Determinística:</strong> La validación de RUT chileno y el matching documento-requerimiento 
+                      son tareas algorítmicas automatizables al 100%
+                    </li>
+                    <li>
+                      <strong>Capacidad NLP:</strong> Los LLMs actuales (Gemini, GPT-4) tienen la capacidad comprobada de 
+                      comprender contexto legal y extraer información estructurada
+                    </li>
+                    <li>
+                      <strong>Carga Mecánica:</strong> El 75% del tiempo del asistente se dedica a tareas repetitivas y de 
+                      bajo valor que pueden ser automatizadas
+                    </li>
+                  </ul>
+
+                  <div className="hypothesis-validation">
+                    <h4>📊 Validaremos esta hipótesis mediante:</h4>
+                    <div className="validation-metrics">
+                      <div className="validation-item">
+                        <div className="validation-icon">🎯</div>
+                        <div className="validation-content">
+                          <strong>Precisión ≥ 90%</strong>
+                          <span>en clasificación automática de los 9 tipos de gestión</span>
+                        </div>
+                      </div>
+                      <div className="validation-item">
+                        <div className="validation-icon">⚡</div>
+                        <div className="validation-content">
+                          <strong>Tiempo {'<'} 4 horas</strong>
+                          <span>de respuesta promedio (vs 48h actuales)</span>
+                        </div>
+                      </div>
+                      <div className="validation-item">
+                        <div className="validation-icon">📈</div>
+                        <div className="validation-content">
+                          <strong>Adopción 80%</strong>
+                          <span>del equipo en los primeros 6 meses</span>
+                        </div>
+                      </div>
+                      <div className="validation-item">
+                        <div className="validation-icon">✅</div>
+                        <div className="validation-content">
+                          <strong>Reducción 60%</strong>
+                          <span>en errores de documentación y clasificación</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="intro-conclusion">
+                Este informe detalla cómo Aquiles no solo resuelve el problema operativo inmediato, sino que sienta las 
+                bases para un <strong>ecosistema multi-agente</strong> que puede escalar a otras áreas legales y de back-office 
+                en BCI, generando un ROI de <strong>5,737%</strong> en el primer año.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* 1. El Problema Actual */}
         <section id="problema-actual">
           <div className="section-header">

@@ -248,6 +248,229 @@ section:last-of-type::after {
   display: none;
 }
 
+/* Introducción */
+.informe-intro {
+  margin-bottom: 80px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.2), rgba(15, 23, 42, 0.3));
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 24px;
+  padding: 64px 80px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.intro-content {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.intro-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.intro-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--color-gold), #f59e0b);
+  border-radius: 50%;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+.intro-icon svg {
+  color: #0f172a;
+}
+
+.intro-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--color-gold);
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.intro-tagline {
+  font-size: 1.5rem;
+  color: #cbd5e1;
+  margin: 0;
+  font-weight: 300;
+}
+
+.intro-body {
+  text-align: left;
+}
+
+.intro-lead {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #e2e8f0;
+  margin-bottom: 48px;
+  text-align: center;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hypothesis-section {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid var(--color-gold);
+  border-radius: 16px;
+  padding: 48px;
+  margin: 48px 0;
+}
+
+.hypothesis-section h3 {
+  color: var(--color-gold);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.hypothesis-statement {
+  color: #e2e8f0;
+}
+
+.hypothesis-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  text-align: center;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hypothesis-assumptions {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 48px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.hypothesis-assumptions li {
+  background: rgba(30, 58, 138, 0.3);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 28px;
+  transition: all 0.3s ease;
+}
+
+.hypothesis-assumptions li:hover {
+  background: rgba(30, 58, 138, 0.5);
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+.hypothesis-assumptions strong {
+  color: var(--color-gold-light);
+  display: block;
+  margin-bottom: 12px;
+  font-size: 1.15rem;
+}
+
+.hypothesis-validation {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 12px;
+  padding: 40px;
+}
+
+.hypothesis-validation h4 {
+  color: var(--color-gold-light);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.validation-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.validation-item {
+  display: flex;
+  gap: 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.validation-item:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+.validation-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.validation-content {
+  flex: 1;
+}
+
+.validation-content strong {
+  display: block;
+  color: var(--color-gold-light);
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.validation-content span {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.intro-conclusion {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  margin-top: 48px;
+  text-align: center;
+  font-style: italic;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .informe-intro {
+    padding: 32px 24px;
+  }
+
+  .intro-title {
+    font-size: 2.5rem;
+  }
+
+  .intro-tagline {
+    font-size: 1.1rem;
+  }
+
+  .intro-lead,
+  .hypothesis-text,
+  .intro-conclusion {
+    font-size: 1rem;
+  }
+
+  .hypothesis-assumptions,
+  .validation-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
 .informe-section {
   background: rgba(248, 250, 252, 0.03);
   border: 1px solid rgba(148, 163, 184, 0.1);
