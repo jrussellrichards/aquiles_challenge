@@ -204,9 +204,10 @@ const Informe = () => {
               <button onClick={() => scrollToSection('roadmap')}>   4.3 Roadmap 11 Semanas</button>
               <button onClick={() => scrollToSection('claves-exito')}>   4.4 Claves del Éxito</button>
               <button onClick={() => scrollToSection('tecnologia-mvp')}>5. Tecnología del MVP</button>
-              <button onClick={() => scrollToSection('implementacion')}>6. Consideraciones de Implementación</button>
-              <button onClick={() => scrollToSection('vision-futuro')}>7. Visión de Futuro</button>
-              <button onClick={() => scrollToSection('demo')}>8. Prueba el Demo Interactivo</button>
+              <button onClick={() => scrollToSection('mvp-costos')}>6. MVP: Inversión y Retorno</button>
+              <button onClick={() => scrollToSection('implementacion')}>7. Consideraciones de Implementación</button>
+              <button onClick={() => scrollToSection('vision-futuro')}>8. Visión de Futuro</button>
+              <button onClick={() => scrollToSection('demo')}>9. Prueba el Demo Interactivo</button>
             </nav>
           </div>
         </div>
@@ -1086,10 +1087,118 @@ const Informe = () => {
           </div>
         </section>
 
-        {/* 6. Consideraciones de Implementación */}
+        {/* 6. MVP: Inversión y Retorno */}
+        <section id="mvp-costos">
+          <div className="section-header">
+            <h2 className="section-title" data-number="6">MVP: Inversión y Retorno</h2>
+            <p className="section-subtitle">Análisis económico del proyecto enfocado</p>
+          </div>
+
+          <div className="informe-section">
+          {/* Desglose de Costos del MVP */}
+          <div className="cost-breakdown">
+            <h3>💰 Desglose de Costos del MVP</h3>
+            <div className="cost-grid">
+              <div className="cost-card">
+                <div className="cost-icon">🤖</div>
+                <h4>Agente IA</h4>
+                <div className="cost-amount">$36 USD/mes</div>
+                <div className="cost-detail">$432 USD/año</div>
+                <p>Procesamiento inteligente de solicitudes con Gemini API</p>
+              </div>
+              
+              <div className="cost-card">
+                <div className="cost-icon">🏗️</div>
+                <h4>Arquitectura Cloud</h4>
+                <div className="cost-amount">$6.8 USD/mes</div>
+                <div className="cost-detail">$82 USD/año</div>
+                <p>Infraestructura serverless escalable</p>
+              </div>
+              
+              <div className="cost-card highlight">
+                <div className="cost-icon">💰</div>
+                <h4>Inversión Total</h4>
+                <div className="cost-amount">$485,352 USD</div>
+                <div className="cost-detail">$42.8 USD/mes promedio</div>
+                <p>Basado en 6,000 requests/mes con 1,000 tokens entrada y 500 tokens salida</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Comparación de Ahorro */}
+          <div className="savings-comparison">
+            <div className="comparison-item current">
+              <h4>💼 Situación Actual (HOY)</h4>
+              <div className="comparison-amount">$28.8K USD/año</div>
+              <div className="comparison-detail">$2.4K USD/mes</div>
+              <p>2 asistentes dedicados a validaciones</p>
+            </div>
+            
+            <div className="comparison-arrow">→</div>
+            
+            <div className="comparison-item future">
+              <h4>🚀 Con Aquiles (TO BE)</h4>
+              <div className="comparison-amount">$485 USD/año</div>
+              <div className="comparison-detail">$40 USD/mes</div>
+              <p>Solo costo del sistema MVP (asistente participará en proyectos de mayor valor)</p>
+            </div>
+            
+            <div className="comparison-arrow">=</div>
+            
+            <div className="comparison-item savings">
+              <h4>✨ Ahorro Total</h4>
+              <div className="comparison-amount">$28.3K USD/año</div>
+              <div className="comparison-detail">$2.36K USD/mes</div>
+              <p>Liberación de 315 HH mensuales para tareas de mayor valor</p>
+            </div>
+          </div>
+
+          {/* Proyección de ROI */}
+          <div className="roi-projection">
+            <h3>📈 Proyección de Retorno</h3>
+            <div className="roi-chart">
+              <div className="roi-timeline">
+                <div className="roi-point">
+                  <div className="roi-month">Inversión</div>
+                  <div className="roi-value">$485 USD</div>
+                  <div className="roi-desc">Costo anual MVP</div>
+                </div>
+                <div className="roi-point">
+                  <div className="roi-month">Mes 1</div>
+                  <div className="roi-value">$2.36K USD</div>
+                  <div className="roi-desc">Ahorro mensual</div>
+                </div>
+                <div className="roi-point highlight">
+                  <div className="roi-month">Año 1</div>
+                  <div className="roi-value">$28.3K USD</div>
+                  <div className="roi-desc">Ahorro anual total</div>
+                </div>
+                <div className="roi-point">
+                  <div className="roi-month">ROI</div>
+                  <div className="roi-value">5,737%</div>
+                  <div className="roi-desc">Retorno primer año</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="roi-summary">
+              <div className="roi-highlight">
+                <span className="roi-label">Payback:</span>
+                <span className="roi-number">{'<'} 1 semana</span>
+              </div>
+              <div className="roi-highlight">
+                <span className="roi-label">Ahorro 5 años:</span>
+                <span className="roi-number">$141.5K USD</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </section>
+
+        {/* 7. Consideraciones de Implementación */}
         <section id="implementacion">
           <div className="section-header">
-            <h2 className="section-title" data-number="6">Consideraciones de Implementación</h2>
+            <h2 className="section-title" data-number="7">Consideraciones de Implementación</h2>
             <p className="section-subtitle">Alineación de tecnología, seguridad y reglas de negocio</p>
           </div>
 
@@ -1123,50 +1232,69 @@ const Informe = () => {
           </div>
         </section>
 
-        {/* 7. Visión de Futuro */}
+        {/* 8. Visión de Futuro */}
         <section id="vision-futuro">
           <div className="section-header">
-            <h2 className="section-title" data-number="7">Visión de Futuro: Aquiles</h2>
+            <h2 className="section-title" data-number="8">Visión de Futuro: Aquiles</h2>
             <p className="section-subtitle">Primera piedra de un ecosistema multi-agente legal</p>
           </div>
 
           <div className="informe-section">
             <div className="vision-intro">
-              <p className="intro-text">
-                <strong>Aquiles está diseñado para eliminar completamente la automatización manual</strong>, 
-                liberando a los especialistas humanos para que se enfoquen exclusivamente en lo que realmente genera valor: 
-                <strong> análisis estratégico, juicio experto y relaciones de alto impacto</strong>.
-              </p>
-              <p className="intro-text">
-                Este MVP es solo el comienzo. Aquiles está construido para <strong>evolucionar y escalar</strong>, 
-                con la capacidad de alimentarse continuamente de información crítica: <strong>normativas actualizadas, 
-                relaciones familiares, jurisprudencia, precedentes corporativos</strong> y cualquier documento relevante. 
-                El objetivo final: <strong>responder cualquier pregunta legal compleja en segundos</strong>, 
-                con precisión experta y contexto completo.
-              </p>
+              <div className="vision-statement">
+                <div className="vision-icon-large">🚀</div>
+                <p className="vision-main-text">
+                  <strong>Aquiles está diseñado para eliminar completamente la automatización manual</strong>, 
+                  liberando a los especialistas humanos para que se enfoquen exclusivamente en lo que realmente genera valor: 
+                  <strong> análisis estratégico, juicio experto y relaciones de alto impacto</strong>.
+                </p>
+              </div>
+              
+              <div className="vision-evolution">
+                <div className="evolution-icon">🧠</div>
+                <p className="evolution-text">
+                  Este MVP es solo el comienzo. Aquiles está construido para <strong>evolucionar y escalar</strong>, 
+                  con la capacidad de alimentarse continuamente de información crítica: <strong>normativas actualizadas, 
+                  relaciones familiares, jurisprudencia, precedentes corporativos</strong> y cualquier documento relevante. 
+                  El objetivo final: <strong>responder cualquier pregunta legal compleja en segundos</strong>, 
+                  con precisión experta y contexto completo.
+                </p>
+              </div>
             </div>
 
             <div className="vision-grid">
               <div className="vision-card">
+                <div className="vision-card-icon">⚡</div>
                 <h4>Asistente Core</h4>
                 <p>Evoluciona hacia núcleo operativo completo de Fiscalía</p>
+                <div className="vision-card-footer">
+                  <span className="vision-badge">Fase 2-3</span>
+                </div>
               </div>
               <div className="vision-card">
+                <div className="vision-card-icon">🔄</div>
                 <h4>Cerebro Vivo</h4>
                 <p>Carga continua de normativas y protocolos actualizados</p>
+                <div className="vision-card-footer">
+                  <span className="vision-badge">Continuo</span>
+                </div>
               </div>
               <div className="vision-card">
+                <div className="vision-card-icon">🌐</div>
                 <h4>Ecosistema Multi-Agente</h4>
                 <p>Agentes especializados por dominio legal específico</p>
+                <div className="vision-card-footer">
+                  <span className="vision-badge">Fase 4+</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 8. Demo Interactivo */}
+        {/* 9. Demo Interactivo */}
         <section id="demo">
           <div className="section-header">
-            <h2 className="section-title" data-number="8">Prueba el Demo Interactivo</h2>
+            <h2 className="section-title" data-number="9">Prueba el Demo Interactivo</h2>
             <p className="section-subtitle">Experimenta el proceso de triage automatizado</p>
           </div>
           
