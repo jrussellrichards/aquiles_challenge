@@ -1354,25 +1354,6 @@ const Informe = () => {
           </div>
         </section>
 
-        {/* 9. Demo Interactivo */}
-        <section id="demo">
-          <div className="section-header">
-            <h2 className="section-title" data-number="9">Prueba el Demo Interactivo</h2>
-            <p className="section-subtitle">Experimenta el proceso de triage automatizado</p>
-          </div>
-          
-          <div className="informe-section">
-            <div className="cta-box">
-              <h3>¿Listo para transformar Fiscalía?</h3>
-              <p>Prueba el demo funcional y descubre el potencial de Aquiles en acción</p>
-              <Link to="/app" className="cta-button-large">
-                <Brain size={24} />
-                <span>Probar Demo Interactivo</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* Recomendaciones Finales */}
         <section id="recomendaciones">
           <div className="section-header">
@@ -1448,6 +1429,110 @@ const Informe = () => {
               </p>
             </div>
 
+          </div>
+        </section>
+
+        {/* 9. Conclusión: Aprendizajes de la PoC */}
+        <section id="conclusion">
+          <div className="section-header">
+            <h2 className="section-title" data-number="9">Conclusión: Aprendizajes de la PoC</h2>
+            <p className="section-subtitle">Lecciones del prototipo, desafíos y próximos pasos</p>
+          </div>
+
+          <div className="informe-section">
+            <div className="conclusion-intro-box">
+              <div className="conclusion-intro-icon">🧭</div>
+              <p className="conclusion-intro-text">
+                La construcción de esta <strong>Prueba de Concepto (PoC)</strong> de Aquiles ha sido un ejercicio intensivo de innovación aplicada. Más que una solución final, este prototipo es una herramienta de descubrimiento que nos ha entregado valiosos aprendizajes sobre el potencial y los desafíos de implementar IA en un entorno corporativo tan especializado como el de Fiscalía.
+              </p>
+            </div>
+
+            <div className="conclusion-learnings">
+              <h3>💡 Principales Aprendizajes del Proyecto</h3>
+              <div className="learnings-grid">
+                <div className="learning-card">
+                  <div className="learning-icon">🧠</div>
+                  <h4>El Conocimiento Experto es el Activo Clave</h4>
+                  <p>La tecnología es un habilitador, pero el valor real se desbloquea al codificar el conocimiento profundo del negocio en modelos que la IA pueda ejecutar. La colaboración con expertos es el pilar del éxito.</p>
+                </div>
+                <div className="learning-card">
+                  <div className="learning-icon">⚡</div>
+                  <h4>Innovación Rápida con IA Generativa</h4>
+                  <p>La capacidad de prototipar y validar ideas con IA generativa transforma el ciclo de innovación. Permite aplicar "crear-medir-aprender" a una velocidad sin precedentes, acelerando el descubrimiento de valor.</p>
+                </div>
+                <div className="learning-card">
+                  <div className="learning-icon">🎯</div>
+                  <h4>Enfoque Estratégico en el Mayor "Dolor"</h4>
+                  <p>Atacar el cuello de botella más significativo primero (la regla del 80/20) es la forma más eficiente de demostrar impacto y generar el impulso necesario para transformaciones más amplias y complejas.</p>
+                </div>
+                <div className="learning-card">
+                  <div className="learning-icon">🤝</div>
+                  <h4>La Sinergia Humano-IA es el Futuro</h4>
+                  <p>El objetivo no es reemplazar, sino potenciar. El mayor potencial se logra cuando la IA maneja tareas a escala, liberando al talento humano para enfocarse en estrategia, juicio experto y supervisión de alto valor.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="conclusion-actions">
+              <h3>🤔 ¿Qué creemos que será clave para el éxito de Aquiles?</h3>
+              <div className="actions-numbered">
+                <div className="action-item">
+                  <div className="action-number">1</div>
+                  <div className="action-content">
+                    <h4>Involucrar a TI y CoE desde el Día Cero</h4>
+                    <p>Para un piloto, la alineación temprana con TI (arquitectura, seguridad) y el CoE de IA (gobierno, buenas prácticas) es crucial para asegurar la viabilidad técnica y la integración con el ecosistema BCI.</p>
+                  </div>
+                </div>
+                <div className="action-item">
+                  <div className="action-number">2</div>
+                  <div className="action-content">
+                    <h4>Definir un "Golden Set" de Datos Más Robusto</h4>
+                    <p>Dedicaríamos más tiempo al inicio para curar y anonimizar un conjunto de datos de alta calidad ("golden set"). Esto es fundamental para entrenar, validar y medir la precisión del modelo de forma objetiva durante el piloto.</p>
+                  </div>
+                </div>
+                <div className="action-item">
+                  <div className="action-number">3</div>
+                  <div className="action-content">
+                    <h4>Construir un Dashboard de Métricas desde el Inicio</h4>
+                    <p>Un panel de control para medir KPIs (tiempos, precisión, etc.) no es un lujo, es una necesidad. En un piloto, lo implementaríamos desde el principio para tener visibilidad en tiempo real del impacto y facilitar la toma de decisiones basadas en datos.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="conclusion-final-box">
+              <div className="final-gradient-bg">
+                <div className="final-content">
+                  <div className="final-icon">🚀</div>
+                  <h3>El Futuro es Prometedor</h3>
+                  <p>
+                    Esta PoC no es el final del camino, sino el primer paso validado. Demuestra que es posible transformar radicalmente la eficiencia de Fiscalía.
+                  </p>
+                  <p>
+                    <strong>El siguiente paso lógico es llevar estos aprendizajes a un Piloto controlado.</strong> Con el apoyo institucional y la colaboración demostrada, Aquiles tiene el potencial de convertirse en un caso de éxito de transformación digital en BCI, sentando las bases para un futuro donde la IA y el talento humano colaboren para crear un valor excepcional.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 10. Demo Interactivo */}
+        <section id="demo">
+          <div className="section-header">
+            <h2 className="section-title" data-number="10">Prueba el Demo Interactivo</h2>
+            <p className="section-subtitle">Experimenta el proceso de triage automatizado</p>
+          </div>
+          
+          <div className="informe-section">
+            <div className="cta-box">
+              <h3>¿Listo para transformar Fiscalía?</h3>
+              <p>Prueba el demo funcional y descubre el potencial de Aquiles en acción</p>
+              <Link to="/app" className="cta-button-large">
+                <Brain size={24} />
+                <span>Probar Demo Interactivo</span>
+              </Link>
+            </div>
           </div>
         </section>
 

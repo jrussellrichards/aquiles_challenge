@@ -3444,3 +3444,251 @@ section:last-of-type::after {
     font-size: 0.8rem;
   }
 }
+
+/* Conclusion Section Styles */
+.conclusion-intro-box {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+.conclusion-intro-icon {
+  font-size: 3.5rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.conclusion-intro-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.conclusion-intro-text strong {
+  font-weight: 700;
+  color: #ffd60a;
+}
+
+/* Learnings Grid */
+.conclusion-learnings {
+  margin: 3rem 0;
+}
+
+.conclusion-learnings h3 {
+  font-size: 1.8rem;
+  color: #1e40af;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.learnings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.learning-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.learning-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.12);
+  transform: translateY(-4px);
+}
+
+.learning-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.learning-card h4 {
+  font-size: 1.2rem;
+  color: #1e40af;
+  margin: 0.5rem 0 1rem 0;
+  font-weight: 700;
+}
+
+.learning-card p {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Actions Section */
+.conclusion-actions {
+  margin: 3rem 0;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.conclusion-actions h3 {
+  font-size: 1.8rem;
+  color: #1e40af;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.actions-numbered {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.action-item {
+  display: flex;
+  gap: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.action-item:hover {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.action-number {
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.action-content h4 {
+  font-size: 1.1rem;
+  color: #1e40af;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.action-content p {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Final Box - Paradigm Change */
+.conclusion-final-box {
+  margin-top: 3rem;
+}
+
+.final-gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-gradient-bg::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translate(-100%, -100%); }
+  100% { transform: translate(100%, 100%); }
+}
+
+.final-content {
+  background: white;
+  border-radius: 14px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.final-content h3 {
+  font-size: 1.8rem;
+  color: #667eea;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.final-content p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.5rem;
+}
+
+.final-content p:last-child {
+  margin-bottom: 0;
+}
+
+.final-highlight {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-left: 4px solid #667eea;
+  padding: 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .conclusion-intro-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .conclusion-intro-icon {
+    font-size: 2.5rem;
+  }
+
+  .learnings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .final-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .final-content h3 {
+    font-size: 1.4rem;
+  }
+
+  .action-item {
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+
+  .action-number {
+    align-self: flex-start;
+  }
+}
+
