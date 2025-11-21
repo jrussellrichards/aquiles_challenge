@@ -953,48 +953,111 @@ const Informe = () => {
           </div>
         </section>
 
-        {/* 4.3 Roadmap del MVP */}
+        {/* 4.3 Roadmap del MVP y PoC (formato con duraciones) */}
         <section id="roadmap">
           <div className="section-header">
-            <h3 className="subsection-title">4.3 Roadmap de Implementación</h3>
-            <p className="section-subtitle">Entrega ágil en 11 semanas</p>
+            <h3 className="subsection-title">4.3 Roadmap de Implementación y PoC</h3>
+            <p className="section-subtitle">Hoja de ruta práctica desde la construcción del agente hasta el escalamiento (con duraciones)</p>
           </div>
 
           <div className="informe-section">
-          <div className="roadmap-timeline">
-            <div className="timeline-item">
-              <div className="timeline-marker">1</div>
-              <div className="timeline-content">
-                <h4>Fase 1 - Discovery</h4>
-                <span className="timeline-weeks">Semanas 1-2</span>
-                <p>Formalización de reglas y alcance del MVP</p>
+            <div className="roadmap-timeline roadmap-grid">
+
+              <div className="timeline-item">
+                <div className="timeline-marker">0</div>
+                <div className="timeline-content">
+                  <h4>Progreso hasta hoy — Preparando a Aquiles para Fiscalía</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: Iterativo</span></div>
+                  <p>
+                    Priorizamos lo que el agente debe reconocer para Fiscalía, entrenamos a Aquiles con las regulaciones y
+                    lineamientos aplicables, y construimos ejemplos representativos. Implementamos un agente capaz de distinguir
+                    los escenarios esperados y validamos casos de uso con el equipo de Fiscalía. Además, montamos una plataforma
+                    de prueba en ambiente no productivo para medir y pivotear rápidamente — este demo incluido en este informe
+                    sigue en mejora continua hasta la entrega final del <strong>5 de diciembre</strong>.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-marker">2</div>
-              <div className="timeline-content">
-                <h4>Fase 2 - Prototipo</h4>
-                <span className="timeline-weeks">Semanas 3-5</span>
-                <p>Motor IA y simulaciones de validación</p>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">1</div>
+                <div className="timeline-content">
+                  <h4>Validación en colaboración con Fiscalía</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: En curso (hasta 5 dic)</span></div>
+                  <p>Recogiendo información y datos junto al equipo de Fiscalía para potenciar la efectividad del agente. Ajustamos reglas,
+                  ejemplos y criterios operativos según el feedback recibido.</p>
+                </div>
               </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-marker">3</div>
-              <div className="timeline-content">
-                <h4>Fase 3 - Piloto</h4>
-                <span className="timeline-weeks">Semanas 6-9</span>
-                <p>Piloto en sombra con feedback continuo</p>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">2</div>
+                <div className="timeline-content">
+                  <h4>Impulsar adopción con stakeholders clave</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: 2 semanas (coord.)</span></div>
+                  <p>
+                    Coordinar TI → CoE Generative AI → Fiscalía y acordar un plan de trabajo con responsables y entregables.
+                    Dentro de este impulso se presentará formalmente el caso al CoE; recomendamos contactar a <strong>Ricardo Muñoz Riesle</strong>
+                    y <strong>Cristian Ludwig</strong> para priorización y apoyo institucional.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="timeline-item">
-              <div className="timeline-marker">4</div>
-              <div className="timeline-content">
-                <h4>Fase 4 - Despliegue</h4>
-                <span className="timeline-weeks">Semanas 10-11</span>
-                <p>Integración final y capacitación</p>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">3</div>
+                <div className="timeline-content">
+                  <h4>Entregar insumos formales para la PoC (colaborativo)</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: 2 semanas</span></div>
+                  <p>Al finalizar este proyecto entregaremos al equipo de Fiscalía los insumos formales (golden set, requerimientos y dashboards).
+                  Estos insumos deberán seguir completándose y validándose de forma colaborativa durante la PoC y el piloto.</p>
+                  <ul>
+                    <li><strong>Golden set Q&A</strong>: ≥30 casos formales (happy path, denegaciones y casos borde)</li>
+                    <li><strong>Requerimientos funcionales</strong> y diseño a alto nivel</li>
+                    <li><strong>KPIs de negocio</strong> para medir éxito (tiempo, precisión, adopción)</li>
+                    <li><strong>Observabilidad</strong>: métricas y dashboards</li>
+                    <li>Lista de integraciones y posible PoC previa (low-code)</li>
+                  </ul>
+                </div>
               </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">4</div>
+                <div className="timeline-content">
+                  <h4>PoC: Medir impacto temprano y aprender rápido</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: 4-6 semanas</span></div>
+                  <p>Medir KPIs tempranos (tiempo de respuesta, precisión de clasificación, tasa de aceptación por usuarios, satisfacción interna). Ejecutar ciclos semanales de medición y ajustes rápidos (pivot) en función de los resultados.</p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">5</div>
+                <div className="timeline-content">
+                  <h4>Piloto operativo con usuarios reales</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: 8-12 semanas</span></div>
+                  <p>Despliegue controlado a usuarios reales, con seguimiento cercano desde CoE y soporte operativo. Recolección de métricas para validar hipótesis y preparar escalamiento.</p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">6</div>
+                <div className="timeline-content">
+                  <h4>Escalamiento empresarial</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: 8-16 semanas</span></div>
+                  <p>Entregar métricas del piloto, requisitos de escalamiento (latencia, concurrencia, número de usuarios), protocolos HIL y runbook operativo. Asignación de responsables de monitoreo por el negocio.</p>
+                </div>
+              </div>
+
+              <div className="timeline-item">
+                <div className="timeline-marker">7</div>
+                <div className="timeline-content">
+                  <h4>Transferencia y gobernanza operacional</h4>
+                  <div className="timeline-meta"><span className="timeline-duration">Duración: 2 semanas</span></div>
+                  <p>Entrega de documentación completa, golden set, dashboards, runbook y recomendaciones de gobernanza y operación continua.</p>
+                </div>
+              </div>
+
             </div>
-          </div>
+            <div className="roadmap-note">
+              <p><strong>Nota para Fiscalía:</strong> Los tiempos indicados son estimativos y dependerán de la priorización y capacidad de los equipos involucrados (TI, CoE, Fiscalía). Pueden ajustarse según disponibilidad y decisiones de priorización.</p>
+            </div>
           </div>
         </section>
 
