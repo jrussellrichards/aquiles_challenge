@@ -1310,7 +1310,85 @@ const Informe = () => {
           </div>
         </section>
 
-      </div>
+        {/* Recomendaciones Finales */}
+        <section id="recomendaciones">
+          <div className="section-header">
+            <h2 className="section-title" data-number="10">Recomendaciones Estratégicas</h2>
+            <p className="section-subtitle">Claves para una implementación exitosa y una transformación sostenible</p>
+          </div>
+          <div className="informe-section recomendaciones-section">
+            
+            <div className="recomendacion-grupo">
+              <h4>💡 Mejoras al Flujo de Solicitudes</h4>
+              <ul className="recomendaciones-list">
+                <li>
+                  <strong>Estandarización del Ingreso:</strong> Implementar un formulario único para el ingreso de solicitudes. Esto asegura información completa y homogénea desde el inicio, eliminando la ambigüedad de los correos libres y facilitando el procesamiento automatizado.
+                </li>
+                <li>
+                  <strong>Tracking con Alertas Automáticas:</strong> Habilitar un sistema de seguimiento que muestre el estado de cada solicitud (abierta, en revisión, derivada, resuelta). Incorporar notificaciones automáticas en hitos clave para mejorar la trazabilidad, visibilidad y tiempos de respuesta.
+                </li>
+                <li>
+                  <strong>Comunicación Automática al Cierre:</strong> Al resolver una solicitud, enviar una notificación automática al cliente. Esto cierra formalmente el ciclo de atención, reduce consultas posteriores y mitiga el impacto de ausencias del ejecutivo.
+                </li>
+              </ul>
+            </div>
+
+            <div className="recomendacion-grupo">
+              <h4>🚀 Implementación y Escalabilidad</h4>
+              <ul className="recomendaciones-list">
+                <li>
+                  <strong>Piloto Controlado y Escalado Gradual:</strong> Iniciar con un piloto que involucre al equipo clave desde el primer día. Recoger feedback continuo, validar resultados y escalar progresivamente para asegurar una adopción sólida y confiable.
+                </li>
+                <li>
+                  <strong>Diseño Modular para Evolución:</strong> Concebir a Aquiles no como un sistema cerrado, sino como una plataforma modular y extensible. Esto permitirá incorporar fácilmente nuevos agentes especializados (contratos, litigios, compliance) conforme evolucione la operación legal.
+                </li>
+              </ul>
+            </div>
+
+            <div className="recomendacion-grupo">
+              <h4>📊 Medición y Agilidad</h4>
+              <ul className="recomendaciones-list">
+                <li>
+                  <strong>KPIs Tempranos y Pivoteo Ágil:</strong> Definir desde el inicio métricas clave de éxito (tiempo de respuesta, precisión de clasificación, satisfacción del equipo). Medir semanalmente durante el piloto y estar preparados para pivotar rápidamente si los datos indican ajustes necesarios. La agilidad es fundamental para maximizar el valor del MVP.
+                </li>
+                <li>
+                  <strong>Mentalidad de Mejora Continua:</strong> Establecer ciclos cortos de retroalimentación y experimentación. El sistema debe aprender de cada caso procesado, y el equipo debe sentirse empoderado para proponer mejoras basadas en la experiencia real de uso.
+                </li>
+              </ul>
+            </div>
+
+            <div className="recomendacion-grupo">
+              <h4>🎯 Cambio de Paradigma</h4>
+              <ul className="recomendaciones-list">
+                <li>
+                  <strong>De "Entregable" a "Fundamento de Transformación":</strong> Es crucial no ver a Aquiles como un simple proyecto con fecha de fin, sino como la primera piedra angular de la transformación digital de Fiscalía. Es un activo vivo que crecerá, aprenderá y se adaptará, generando valor compuesto a lo largo del tiempo.
+                </li>
+              </ul>
+            </div>
+
+            {/* Mensaje Final Potente */}
+            <div className="recomendacion-cierre">
+              <div className="cierre-icon">🌟</div>
+              <h3>Más Allá de un Producto: Un Nuevo Mindset</h3>
+              <p className="cierre-texto">
+                <strong>Aquiles no es solo una herramienta, es una filosofía de trabajo.</strong> Nuestra recomendación final 
+                va más allá de la tecnología: <strong>adopten Aquiles como catalizador de un cambio cultural hacia la 
+                automatización inteligente y el trabajo de alto valor</strong>.
+              </p>
+              <p className="cierre-texto">
+                Este MVP es el punto de partida para que Fiscalía desarrolle un <strong>mindset orientado al futuro</strong>: 
+                donde la IA maneja lo repetible, los humanos se enfocan en lo estratégico, y la organización entera evoluciona 
+                hacia un modelo escalable, inteligente y resiliente.
+              </p>
+              <p className="cierre-final">
+                <strong>No están adquiriendo un sistema. Están construyendo el futuro de Fiscalía BCI.</strong>
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+      </div> {/* Cierre de informe-container */}
 
       {/* Footer */}
       <footer className="informe-footer">
@@ -1352,7 +1430,7 @@ const Informe = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Informe
+export default Informe;
